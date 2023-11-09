@@ -1,0 +1,64 @@
+.form{
+  
+  /* padding: 20px;
+  height:100vh;
+  width: 400px; */
+  padding:10px;
+  width:500px;
+  margin-left:10%;
+  margin-top:4px;
+  margin-bottom:4px;
+  
+}
+
+input[type=text],[type=email], select, [type=password],[type=date]{
+    width: 100%;
+    padding: 7px 7px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 100%;
+    background-color: #090a09;
+    color: white;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #252525;
+  }
+  
+  
+
+  input.ng-invalid.ng-touched{
+    border: red 1px solid;
+  }
+  small{
+    color: red;
+  }
+
+  .signUpBackground
+  {
+      background-image: url('../../assets/signUp2.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
+  }
+
+  
+
+  
+
+  
+
+  
+
+  

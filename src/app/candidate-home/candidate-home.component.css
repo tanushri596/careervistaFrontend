@@ -1,0 +1,16 @@
+input.ng-invalid.ng-touched{
+    border: red 1px solid;
+  }
+  small{
+    color: red;
+  }
+
+  input[type=text],[type=number], select, textarea,[type=date]{
+    width: 100%;
+    padding: 7px 7px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }

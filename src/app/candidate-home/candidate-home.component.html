@@ -1,0 +1,323 @@
+<!--  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Candidate Portal Home Page</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+  <header class="text-center m-0" style="background-color:#9BBEC8;">
+    
+    <nav class="navbar navbar-expand-sm navbar-light" >
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+  
+
+        <h2 class="navbar-brand" style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:200px;">
+          <i class="fa fa-user fa-1x"></i>  Welcome, {{candidateName}} !</h2>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto flex-column d-lg-none">
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fa fa-home"></i> Home</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fa fa-award"></i> Projects</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class=""></i>Experience</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">Applications</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fa fa-user-graduate"></i> Education</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <i class="fa fa-arrow-right-from-bracket"></i>Log Out</a>
+              </li>
+          </ul>
+      </div>
+    
+
+        <div class="d-lg-flex d-md-block d-sm-block ml-auto mr-auto">
+          <button *ngIf="candidateDesignation==='workingProfessional'" class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#postJobModal" style="background-color:#164863; border-radius:10px;">
+            <i class="fa fa-handshake"></i> Post a Job
+          </button>
+          <button class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addEducationModal" style="background-color:#164863; border-radius:10px">
+            <i class="fa fa-user-graduate"></i> Add Education
+          </button>
+          <button class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addProjectModal" style="background-color:#164863; border-radius:10px">
+           <i class="fa fa-award"></i> Add Project
+          </button>
+          <button class="btn btn-primary m-2" data-bs-toggle="modal" data-bs-target="#addExperienceModal" style="background-color:#164863; border-radius:10px">
+           <i class="fa fa-plus"></i> Add Experience
+          </button>
+        </div>
+      </div>
+    </nav>
+    
+    
+  </header>
+
+  <!-- Modals start from here -->
+  <div class="modal fade" id="postJobModal" tabindex="-1" role="dialog" aria-hidden="true" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #96B6C5;">
+          <h2 class="modal-title ">Post a new job</h2>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" >
+          <form #postJobForm="ngForm" (ngSubmit)="postJob(postJobForm.value); postJobForm.reset()">
+            
+              <label for="role">Role*</label>
+              <input type="text" class="form-control" id="role" name="role" ngModel required #role="ngModel">
+              <div *ngIf="role.invalid && (role.dirty || role.touched)">
+                <small>Role is required.</small>
+              </div>
+
+            
+              <label for="description">Description*</label>
+              <textarea class="form-control" id="description" name="description" ngModel required #description="ngModel"></textarea>
+              <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                <small>Description is required.</small>
+              </div>
+           
+            
+              <label for="vacancy">Vacancy*</label>
+              <input type="number" class="form-control" id="vacancy" name="vacancy" ngModel required #vacancy="ngModel">
+              <div *ngIf="vacancy.invalid && (vacancy.dirty || vacancy.touched)">
+                <small>Vacancy is required.</small>
+              </div>
+            
+            
+              <label for="salary">Salary Per Annum*</label>
+              <input type="number" class="form-control" id="salary" name="salary" ngModel required min="1" #salary="ngModel">
+              <div *ngIf="salary.invalid && (salary.dirty || salary.touched)">
+                <small>Please enter a positive value of salary.</small>
+              </div>
+
+              <div style="margin:5px">
+              <label for="location" 
+              >Location</label
+            >
+            <select
+              name="location"
+              id="location"
+              [(ngModel)]="selectedLocation"
+             
+            >
+              <option value="remote">Remote</option>
+              <option value="On-site">On Site</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+           
+            <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal" [disabled]="postJobForm.invalid">Submit</button>
+          </form>
+          
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #96B6C5;">
+          <h2 class="modal-title text-center">Add Education</h2>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-dark">
+          <form #addEducationForm="ngForm" (ngSubmit)="addEducation(addEducationForm.value); addEducationForm.reset()">
+            
+            <label for="institution">Institution*</label>
+            <input type="text" class="form-control" id="institution" name="institution" ngModel required #institution="ngModel">
+            <div *ngIf="institution.invalid && (institution.dirty || institution.touched)">
+              <small>Institution is required.</small>
+            </div>
+
+            <label for="courseName">Course Name*</label>
+            <input type="text" class="form-control" id="courseName" name="courseName" ngModel required #courseName="ngModel">
+            <div *ngIf="courseName.invalid && (courseName.dirty || courseName.touched)">
+              <small>Course Name is required.</small>
+            </div>
+
+          
+            <label for="marks">Marks in percentage*</label>
+            <input type="number" class="form-control" id="marks" name="marks" ngModel required #marks="ngModel"/>
+            <div *ngIf="marks.invalid && (marks.dirty || marks.touched)">
+              <small>If Education is not completed then enter the last score</small>
+            </div>
+         
+          
+            <label for="startDate">Starting Date*</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" ngModel required #startDate="ngModel">
+            <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)">
+              <small>Starting Date is required.</small>
+            </div>
+          
+          
+            <label for="endingDate">Ending Date*</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" ngModel required #endDate="ngModel">
+            <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)">
+              <small>Ending Date is required.</small>
+            </div>
+
+            
+          
+         
+          <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal"  [disabled]="addEducationForm.invalid">Submit</button>
+        </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addProjectModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #96B6C5;">
+          <h2 class="modal-title">Add a new project</h2>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addProjectForm="ngForm" (ngSubmit)="addProject(addProjectForm.value); addProjectForm.reset()">
+            
+            <label for="name">Name*</label>
+            <input type="text" class="form-control" id="name" name="name" ngModel required #name="ngModel">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)">
+              <small>Project Name is required.</small>
+            </div>
+
+            <label for="description">Description*</label>
+            <textarea type="text" class="form-control" id="description" name="description" ngModel required #description="ngModel"> </textarea>
+            <div *ngIf="description.invalid && (description.dirty || description.touched)">
+              <small>Description is required.</small>
+            </div>
+
+          
+           
+          
+            <label for="startDate">Starting Date*</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" ngModel required #startDate="ngModel">
+            <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)">
+              <small>Starting Date is required.</small>
+            </div>
+          
+          
+            <label for="endingDate">Ending Date*</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" ngModel required #endDate="ngModel">
+            <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)">
+              <small>Ending Date is required.</small>
+            </div>
+
+            
+          
+         
+          <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal"  [disabled]="addProjectForm.invalid">Submit</button>
+        </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addExperienceModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #96B6C5;">
+          <h2 class="modal-title">Add your Experience</h2>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addExperienceForm="ngForm" (ngSubmit)="addExperience(addExperienceForm.value); addExperienceForm.reset()">
+            
+            <label for="company">Company*</label>
+            <input type="text" class="form-control" id="company" name="company" ngModel required #company="ngModel">
+            <div *ngIf="company.invalid && (company.dirty || company.touched)">
+              <small>Company Name is required.</small>
+            </div>
+
+            <label for="role">Role*</label>
+              <input type="text" class="form-control" id="role" name="role" ngModel required #role="ngModel">
+              <div *ngIf="role.invalid && (role.dirty || role.touched)">
+                <small>Role is required.</small>
+              </div>
+
+            <label for="">Description*</label>
+            <textarea type="text" class="form-control" id="description" name="description" ngModel required #description="ngModel"> </textarea>
+            <div *ngIf="description.invalid && (description.dirty || description.touched)">
+              <small>Description is required.</small>
+            </div>
+
+          
+           
+          
+            <label for="startDate">Starting Date*</label>
+            <input type="date" class="form-control" id="startDate" name="startDate" ngModel required #startDate="ngModel">
+            <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)">
+              <small>Starting Date is required.</small>
+            </div>
+          
+          
+            <label for="endingDate">Ending Date*</label>
+            <input type="date" class="form-control" id="endDate" name="endDate" ngModel required #endDate="ngModel">
+            <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)">
+              <small>Ending Date is required.</small>
+            </div>
+
+            
+          
+         
+          <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal"  [disabled]="addExperienceForm.invalid">Submit</button>
+        </form>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+
+
+
+
+  

@@ -1,0 +1,373 @@
+<div class="signUpBackground" *ngIf="candidate">
+  <div
+    class="form col-lg-6"
+    style="background-color: #add8e6; color: black; border-radius: 30px"
+  >
+    <h2 id="registration">Candidate Form</h2>
+    <form
+      (ngSubmit)="onCandidateSubmit(candidateSignUpForm.value)"
+      #candidateSignUpForm="ngForm"
+    >
+      <div>
+        <label for="name">First Name*</label>
+        <input
+          type="text"
+          id="firstName"
+          placeholder="first name"
+          name="firstName"
+          ngModel
+          required
+          #firstName="ngModel"
+        />
+
+        <div *ngIf="(firstName.dirty || firstName.touched) && (!candidateNameValidator(firstName.value)|| firstName.invalid)">
+
+          <small>Enter a valid First name which should not contain spaces and numbers</small>
+        </div>
+
+        <label for="name">Last Name*</label>
+        <input
+          type="text"
+          id="lastName"
+          placeholder="last name"
+          name="lastName"
+          ngModel
+          required
+          #lastName="ngModel"
+        />
+
+        <div *ngIf="(lastName.dirty || lastName.touched) && ( !candidateNameValidator(lastName.value) || lastName.invalid)">
+           <small>Enter a valid Last name which should not contain spaces and numbers</small>
+         </div>
+
+        <label for="email">Email*</label>
+        <input
+          type="email"
+          id="username"
+          name="username"
+          placeholder="Your email"
+          ngModel
+          required
+          email
+          #username="ngModel"
+        />
+
+        <div
+          *ngIf="
+            ((username.dirty || username.touched) &&
+              candidateMailValidator(username.value)) 
+          "
+        >
+          <small>Email exists</small>
+        </div>
+
+        <div
+          *ngIf="((username.dirty || username.touched) && username.invalid)"
+          
+        >
+          <small>Please enter a valid email</small>
+        </div>
+
+
+
+        <label for="password">Password*</label>
+        <input
+          type="password"
+          id="password"
+          placeholder="min length 8 characters"
+          name="password"
+          ngModel
+          required
+          #password="ngModel"
+        />
+
+        <div
+          *ngIf="
+            (password.dirty || password.touched) &&
+            !passwordValid(password.value)
+          "
+        >
+          <small
+            >Password must contain one small letter, one capital letter, one
+            number and one special charcater.</small
+          >
+        </div>
+
+        <label for="confirmPassword">Confirm Password*</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          placeholder="should be matched with the entered one"
+          name="confirmPassword"
+          ngModel
+          required
+          #confirmPassword="ngModel"
+        />
+
+        <div
+          *ngIf="
+            (confirmPassword.dirty || confirmPassword.touched) &&
+            password.value !== confirmPassword.value
+          "
+        >
+          <small>this should match the entered one</small>
+        </div>
+
+        <label for="date">Birth Date*</label>
+        <input
+          type="date"
+          id="birthDate"
+          name="birthDate"
+          ngModel
+          required
+          #birthDate="ngModel"
+        />
+        <div *ngIf="birthDate.dirty || birthDate.touched">
+          <div *ngIf="!birthDateValidator(birthDate.value)">
+            <small>Should be 18 years or older</small>
+          </div>
+        </div>
+
+        <label for="contactNumber">Phone Number*</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          placeholder=""
+          name="phoneNumber"
+          inputmode="numeric"
+          ngModel
+          required
+          minlength="10"
+          maxlength="10"
+          #phoneNumber="ngModel"
+        />
+
+        <div
+          *ngIf="
+            (phoneNumber.touched || phoneNumber.dirty) &&
+            !phoneNumberValidator(phoneNumber.value)
+          "
+        >
+          <small>please enter a valid phone number</small>
+        </div>
+
+        <label for="Designation" style="margin-left: 10px"
+          >Choose Your Designation</label
+        >
+        <select
+          name="designation"
+          id="designation"
+          [(ngModel)]="selectedDesignation" >
+          <option value="student">Student</option>
+          <option value="workingProfessional">Working Professional</option>
+        </select>
+
+        <div *ngIf="selectedDesignation === 'workingProfessional'">
+          <label for="company" style="margin-left: 10px">Select Company</label>
+          <select name="company" id="company" ngModel #company="ngModel">
+            <option *ngFor="let company of companyArray" [ngValue]="company">
+              {{ company.name }}
+            </option>
+          </select>
+        </div>
+
+        <input
+          type="submit"
+          value="Register"
+          id="btn"
+          [disabled]="
+            !candidateSignUpForm.valid ||
+            !passwordValid(password.value) ||
+            password.value !== confirmPassword.value ||
+            !birthDateValidator(birthDate.value) ||
+            !phoneNumberValidator(phoneNumber.value) ||
+            candidateMailValidator(username.value)
+          "
+        />
+
+        <h5 style="margin: 5px">
+          Already a User ??
+          <button style="border: 1px solid black; border-radius: 6px">
+            <a routerLink="/logIn" style="text-decoration: none; color: black"
+              >Sign In here</a
+            >
+          </button>
+        </h5>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="signUpBackground" *ngIf="!candidate">
+  <div
+    class="form col-lg-6"
+    style="background-color: #add8e6; color: black; border-radius: 30px"
+  >
+    <h2 id="registration">Company Form</h2>
+    <form
+      (ngSubmit)="onCompanySubmit(companySignUpForm.value)"
+      #companySignUpForm="ngForm"
+    >
+      <div>
+        <small>* means those fields are required</small>
+      </div>
+
+      <label for="name">Name*</label>
+      <input
+        type="text"
+        id="name"
+        placeholder="Your name"
+        name="name"
+        ngModel
+        required
+        #name="ngModel"
+      />
+
+      <div
+        *ngIf="(name.dirty || name.touched) && companyNameValidator(name.value)"
+      >
+        <small>Name already exists</small>
+      </div>
+      <div *ngIf="(name.dirty || name.touched) && name.invalid">
+        <small>Please enter a name</small>
+      </div>
+
+      <label for="email">Email*</label>
+      <input
+        type="email"
+        id="username"
+        name="username"
+        placeholder="Your email"
+        ngModel
+        required
+        email
+        #username="ngModel"
+      />
+
+      <div
+        *ngIf="
+          ((username.dirty || username.touched) &&
+            companyMailValidator(username.value)) ||
+          ((username.dirty || username.touched) && username.invalid)
+        "
+      >
+        <small>Please enter a unique and valid email</small>
+      </div>
+
+      <label for="password">Password*</label>
+      <input
+        type="password"
+        id="password"
+        placeholder="Password should be 8 characters long"
+        name="password"
+        ngModel
+        minlength="8"
+        required
+        #password="ngModel"
+      />
+
+      <div
+        *ngIf="
+          (password.dirty || password.touched) && !passwordValid(password.value)
+        "
+      >
+        <small
+          >Password must contain one small letter, one capital letter, one
+          number and one special charcater.</small
+        >
+      </div>
+
+      <label for="confirmPassword">Confirm Password*</label>
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="should be matched with the entered one"
+        name="confirmPassword"
+        ngModel
+        required
+        #confirmPassword="ngModel"
+      />
+
+      <div
+        *ngIf="
+          (confirmPassword.dirty || confirmPassword.touched) &&
+          password.value !== confirmPassword.value
+        "
+      >
+        <small>this should match the entered one</small>
+      </div>
+
+      <label for="date">Founding Date*</label>
+      <input
+        type="date"
+        id="foundingDate"
+        placeholder="Should born before 01.01.2003"
+        name="foundingDate"
+        ngModel
+        required
+      />
+
+      <label for="ceoName">CEO Name*</label>
+      <input
+        type="text"
+        id="ceoName"
+        name="ceoName"
+        ngModel
+        required
+        minlength="5"
+        #ceoName="ngModel"
+      />
+
+      <div *ngIf="ceoName.invalid && (ceoName.dirty || ceoName.touched)">
+        <div *ngIf="ceoName.errors && ceoName.errors['minlength']">
+          <small>Name must be at least 5 characters long.</small>
+        </div>
+      </div>
+
+      <label for="contactNumber">Phone Number*</label>
+      <input
+        type="text"
+        id="phoneNumber"
+        placeholder=""
+        name="phoneNumber"
+        inputmode="numeric"
+        ngModel
+        required
+        minlength="10"
+        maxlength="10"
+        #phoneNumber="ngModel"
+      />
+
+      <div
+        *ngIf="
+          (phoneNumber.dirty || phoneNumber.touched) &&
+          !phoneNumberValidator(phoneNumber.value)
+        "
+      >
+        <small>Please enter a valid phone number</small>
+      </div>
+
+      <input
+        type="submit"
+        value="Register"
+        id="btn"
+        [disabled]="
+          !companySignUpForm.valid ||
+          !passwordValid(password.value) ||
+          password.value !== confirmPassword.value ||
+          !phoneNumberValidator(phoneNumber.value) ||
+          companyMailValidator(username.value)
+        "
+      />
+
+      <h5 style="margin: 5px">
+        Already a User ??
+        <button style="border: 1 px solid black; border-radius: 6px">
+          <a routerLink="/logIn" style="text-decoration: none; color: black"
+            >Sign In here</a
+          >
+        </button>
+      </h5>
+    </form>
+  </div>
+</div>

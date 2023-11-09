@@ -1,0 +1,70 @@
+<div class="main-div" style="display: flex;">
+  
+
+    <div>
+    <div class="image-div">
+    <img src="../../assets/jobPortal2.jpg" style="height: 70vh;" alt="">
+   
+    
+  <div>
+    <h1 style="text-align:center;font-family: 'Courier New', Courier, monospace;">Welcome Back</h1>
+    <h4 style="text-align:center; ">Unlock new opportunities with every sign in</h4>
+    </div>
+  </div> 
+</div>
+  
+  
+    <div class="form min-vh-20"  style="background-color: #ADD8E6; color:black; border-radius: 30px;">
+      <h2 id="registration" style="margin:10px">Sign In Here</h2>
+      <form (ngSubmit)="onLogin(myForm.value)" #myForm="ngForm" style="margin:20px">
+    
+         
+            
+            
+            <label for="email" style="font-size: larger;">Email</label>
+            <input type="email" id="username" placeholder="Your email"
+            name="username" ngModel required email style="padding:15px">
+            
+  
+            <label for="password" style="font-size:larger">Password</label>
+            <input type="password" id="password" placeholder="Password should be 8 characters long"
+            name="password" ngModel required style="padding:15px">
+            
+    
+           
+              <label for="role" style="margin-left:10px;">Role</label>
+              <select name="role" id="role" ngModel required>
+                <option value="company">Company</option>
+                <option value="candidate">Candidate</option>
+              </select>
+            
+            
+    
+            
+            
+           
+          
+          
+          
+    
+          
+         
+        
+          <input type="submit" value="Sign in" id="btn" [disabled]="!myForm.valid" style="padding:8px; font-size:larger;">
+
+          
+
+        </form>
+        <div style="margin-top:30px; padding:3px; font-size:larger;">
+          <label for="signUp" style="margin-left:10px;">New User ?? Sign Up As a</label>
+          <select name="signUpOption" id="signupOption" ngModel (change)="onSelected($event)">
+            <option value="company">Company</option>
+            <option value="candidate">Candidate</option>
+          </select>
+        </div>
+    </div>
+  
+      
+     
+  </div>
+  
