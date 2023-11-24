@@ -8,6 +8,8 @@ import { SignUpService } from '../services/sign-up.service';
 })
 export class CompanyHomeComponent implements OnInit
  {
+  showSidebar = false;
+
   constructor(private signupService:SignUpService){}
   ngOnInit()
   {
@@ -16,8 +18,13 @@ export class CompanyHomeComponent implements OnInit
       if(!this.signupService.authenticateToken())
       this.signupService.logOut();
 
-    },5000);
+    },60000);
       
+  }
+
+  sidebar()
+  {
+    this.showSidebar = !this.showSidebar;
   }
 
   logOut() {

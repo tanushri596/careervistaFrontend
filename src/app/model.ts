@@ -42,7 +42,8 @@ export interface Job
   salary:number,
   vacancy:number,
   company:Company,
-  user:Candidate
+  user:Candidate,
+  location:string
 }
 
 export interface Education
@@ -52,12 +53,14 @@ export interface Education
   marks:number,
   startDate:string,
   endDate:string,
-  user:Candidate
+  user:Candidate,
+  courseName:string
 }
 
 export interface Project
 {
   id:number,
+  name:string,
   description:string,
   startDate:string,
   endDate:string,
@@ -71,5 +74,16 @@ export interface Experience
   company:string,
   startDate:string,
   endDate:string,
-  user:Candidate
+  user:Candidate,
+  description:string
+}
+
+export interface Application
+{
+  id:number,
+  status:string,
+  active:boolean,
+  job:Job,
+  user:Candidate,
+  applyDate:string
 }

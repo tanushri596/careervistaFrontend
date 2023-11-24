@@ -1,9 +1,9 @@
 import { Injectable, NgModule } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
-import { Candidate, Company, Education, Experience, Job, Project, logIn } from '../model';
+import { Application, Candidate, Company, Education, Experience, Job, Project, logIn } from '../model';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -42,14 +42,52 @@ export class SignUpService {
     return this.http.post(this.baseURL+'/candidate/addEducation',data);
   }
 
+  getEducations(userId:number):()=>Observable<Education[]>
+  {
+    return ()=>this.http.get<Education[]>(`${this.baseURL}/candidate/getEducation/${userId}`);
+ 
+  }
+
+  deleteEducation(eduId:number)
+  {
+    return this.http.delete(`${this.baseURL}/candidate/deleteEducation/${eduId}`);
+ 
+  }
+
   addProject(data : Project)
   {
     return this.http.post(this.baseURL+'/candidate/addProject',data);
   }
 
+  getProjects(userId:number):()=>Observable<Project[]>
+  {
+    return ()=>this.http.get<Project[]>(`${this.baseURL}/candidate/getProject/${userId}`);
+ 
+  }
+
+  deleteProject(proId:number)
+  {
+    return this.http.delete(`${this.baseURL}/candidate/deleteProject/${proId}`);
+ 
+  }
+
+  
+
   addExperience(data : Experience)
   {
     return this.http.post(this.baseURL+'/candidate/addExperience',data);
+  }
+
+  getExperiences(userId:number):()=>Observable<Experience[]>
+  {
+    return ()=>this.http.get<Experience[]>(`${this.baseURL}/candidate/getExperience/${userId}`);
+ 
+  }
+
+  deleteExperience(expId:number)
+  {
+    return this.http.delete(`${this.baseURL}/candidate/deleteExperience/${expId}`);
+ 
   }
 
   authenticateUser(data: logIn) {
@@ -76,15 +114,62 @@ export class SignUpService {
     return this.http.get<Candidate>(`${this.baseURL}/candidate/getCandidateByUsername/${username}`);
   }
 
-
-  getAllCandidates() : ()=>Observable<Candidate[]>
-  {
-    return ()=>this.http.get<Candidate[]>(this.baseURL+'/candidate/getAllCandidates');
+  getCandidate(username: string): Observable<boolean> {
+    
+    return this.http.get<boolean>(`${this.baseURL}/candidate/getCandidateViaUsername/${username}`);
   }
 
-  getAllCompanies():()=>Observable<Company[]>
+  
+  getCompany(username: string): Observable<boolean> {
+    
+    return this.http.get<boolean>(`${this.baseURL}/company/getCompanyViaUsername/${username}`);
+  }
+
+
+  
+getAllCompanies():()=>Observable<Company[]>
   {
     return ()=>this.http.get<Company[]>(this.baseURL +'/company/getAllCompanies');
+  }
+
+  getAllJobs():()=>Observable<Job[]>
+  {
+    return ()=>this.http.get<Job[]>(this.baseURL+'/candidate/getAllJobs');
+  }
+
+  deleteJob(jobId:number)
+  {
+    
+   return this.http.delete(`${this.baseURL}/candidate/deleteJob/${jobId}`);
+  }
+
+  postApplication(application:Application)
+  {
+    console.log(application);
+    return this.http.post(this.baseURL+'/candidate/addApplications',application);
+  }
+
+  getAllApplications(userId:number):()=>Observable<Application[]>
+  {
+    return ()=>this.http.get<Application[]>(`${this.baseURL}/candidate/getApplicationsByUserId/${userId}`);
+ 
+  }
+
+  getAllApplicationsViaJob(jobId:number):()=>Observable<Application[]>
+  {
+    return ()=>this.http.get<Application[]>(`${this.baseURL}/candidate/getApplicationsByJobId/${jobId}`);
+ 
+  }
+
+  updateStatus(status:string,appId:number) : Observable<any>
+  {
+     return this.http.patch<any>(`${this.baseURL}/candidate/updateApplicationStatus/${appId}`,status);
+  }
+
+  deleteApplication(appId:number)
+  {
+    
+   return this.http.delete(`${this.baseURL}/candidate/deleteApplication/${appId}`);
   }
 
   logOut() {
@@ -102,6 +187,22 @@ export class SignUpService {
       } else {
         console.log('No role found');
       }
+
+      if (localStorage.getItem('token')) {
+        localStorage.removeItem('token');
+        console.log('Token removed successfully');
+      } else {
+        console.log('No token found');
+      }
+      
+      if (localStorage.getItem('username')) {
+        localStorage.removeItem('username');
+        console.log('username removed successfully');
+      } else {
+        console.log('No role found');
+      }
+
+      
       
       this.router.navigate(['/logIn']);
     } catch (error) {

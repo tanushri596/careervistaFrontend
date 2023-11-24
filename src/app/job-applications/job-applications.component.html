@@ -1,0 +1,228 @@
+<!--  -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Candidate Portal Home Page</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+  <header class="text-center m-0" style="background-color:#164863;">
+    
+    <nav class="navbar navbar-expand-sm navbar-light" style="padding: 5px 20px;">
+
+      <button class="btn" (click)="sidebar()">
+        <i class="fa fa-bars fa-2x" style="color: white;"></i>
+      </button>
+    
+      <div class="container">
+        <h2 class="navbar-brand d-flex align-items-center justify-content-center" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
+          <b class="flex-row text-light">Career Vista</b>
+        </h2>
+      </div>
+    </nav>
+    
+    
+  </header>
+
+  <!-- Modals start from here -->
+  
+
+ 
+
+  <!-- modals end here -->
+
+  <!-- sidebar started here -->
+
+  <div *ngIf="showSidebar" class="text-light flex-column mb-auto sidebar">
+    <ul style="list-style-type: none; padding: 0; margin: 0;">
+      <li class="mb-3">
+        <a class="nav-link" style="font-size:20px;" routerLink="">
+          <i class="fa fa-home mr-2 fa-1x"></i>Home
+        </a>
+      </li>
+      <li class="nav-item mb-3">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateProjects">
+          <i class="fa fa-award  mr-2 fa-1x"></i>Projects
+        </a>
+      </li>
+      <li class="mb-3">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateExperience">
+          <i class="fa fa-user-tie mr-2 fa-1x"></i>Experience
+        </a>
+      </li>
+      <li class="mb-3">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateJobs">
+          <i class="fa fa-briefcase mr-2 fa-1x"></i>Jobs
+        </a>
+      </li>
+      <li class="mb-3">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateApplications">
+          <i class="fa fa-book-open mr-2 fa-1x"></i>Applications
+        </a>
+      </li>
+      <li class="mb-3">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateEducation">
+          <i class="fa fa-user-graduate mr-2 fa-1x"></i>Education
+        </a>
+      </li>
+      <li class="mb-3">
+        <a>
+        <button class="nav-link" style="font-size:20px;" (click)="logOut()">
+          <i class="fa fa-power-off mr-2 fa-1x"></i>Log Out
+        </button>
+    </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <!-- sidebar ended here -->
+
+ 
+
+
+  <div *ngIf="!showSidebar" class="min-vh-100 text-dark" >
+
+
+    <ng-container *ngIf="jobApplications.length > 0">
+      <h4 class="text-center mt-2" style="text-shadow: 2px 2px 4px rgba(146, 146, 236, 0.7);">Take a look at your applications</h4>
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="table-responsive" style="width: 1200px;">
+          <table class="table table-bordered table-hover m-3">
+            <thead class="thead-dark">
+              <tr>
+                <th class="text-center">Role</th>
+                <th class="text-center">Name</th>
+                <th  class="text-center">email</th>
+                <th class="text-center">Date of Application</th>
+                <th class="text-center">Status</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let application of jobApplications">
+                <td class="text-center">{{ application.job.role }}</td>
+                <td class="text-center">{{ capitalizeFirstLetter(application.user.firstName) +" "+ capitalizeFirstLetter(application.user.lastName) }}</td>
+                <td class="text-center">{{ application.user.username}}</td>
+                <td class="text-center">{{application.applyDate}}</td>
+                <td class="text-center">
+                    
+                    <select
+                    name="status"
+                    id="status"
+                    [(ngModel)]="application.status"
+                    (ngModelChange)="updateStatus(application.id,application.status)"
+                    >
+                    <option value="Pending">Pending</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                   </select>
+               
+               
+                    </td>
+                <!-- <td class="text-center">
+                  <button class="btn btn-success">Update Status</button>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="jobApplications.length == 0">
+    <h2 class="text-center m-3"> Currently you do not have any application.</h2>
+    </ng-container>
+      
+      
+   
+
+  </div>
+
+  <div *ngIf="showSidebar" class="min-vh-100 text-dark" [class.blurred]="showSidebar" >
+
+    <h4 class="text-center mt-2" style="text-shadow: 2px 2px 4px rgba(146, 146, 236, 0.7);">Take a look at your applications</h4>
+
+    <ng-container *ngIf="jobApplications.length > 0">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="table-responsive" style="width: 1200px;">
+          <table class="table table-bordered table-hover m-3">
+            <thead class="thead-dark">
+              <tr>
+                <th class="text-center">Role</th>
+                <th class="text-center">Name</th>
+                <th  class="text-center">email</th>
+                <th class="text-center">Date of Application</th>
+                <th class="text-center">Status</th>
+                
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let application of jobApplications">
+                <td class="text-center">{{ application.job.role }}</td>
+                <td class="text-center">{{ capitalizeFirstLetter(application.user.firstName) +" "+ capitalizeFirstLetter(application.user.lastName) }}</td>
+                <td class="text-center">{{ application.user.username}}</td>
+                <td class="text-center">{{application.applyDate}}</td>
+                <td class="text-center">
+                    
+                    <select
+                    name="status"
+                    id="status"
+                    [(ngModel)]="application.status"
+                    (ngModelChange)="updateStatus(application.id,application.status)"
+                    >
+                    <option value="Pending">Pending</option>
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                   </select>
+               
+               
+                    </td>
+                <!-- <td class="text-center">
+                  <button class="btn btn-success">Update Status</button>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="jobApplications.length == 0">
+    <h2 class="text-center m-3"> Currently you do not have any application.</h2>
+    </ng-container>
+      
+      
+   
+
+  </div>
+
+ 
+
+ 
+
+
+  <footer>
+    <div class="text-center py-2" style="background-color: #9BBEC8;">
+      <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+
+
+</html>
+
+
+
+
+
+
+  

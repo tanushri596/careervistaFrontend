@@ -17,6 +17,8 @@ export class CandidateHomeComponent implements OnInit
   candidateDesignation!:string;
   selectedLocation!:string;
   candidateName!:string;
+  showSidebar:boolean=false;
+ 
 
   
 
@@ -29,7 +31,7 @@ export class CandidateHomeComponent implements OnInit
       if(!this.signupService.authenticateToken())
       this.signupService.logOut();
 
-    },5000);
+    },60000);
 
     this.signupService.getCurrentCandidate(this.username).subscribe(
       data=>
@@ -41,8 +43,8 @@ export class CandidateHomeComponent implements OnInit
          console.log(this.currentCandidate);
       })
 
-    
-      
+     
+
   }
 
   postJob(jobData : Job)
@@ -65,19 +67,7 @@ export class CandidateHomeComponent implements OnInit
      
    }
 
-   addEducation(edudata : Education)
-   {
-    this.toasterService.showNotification('Education added successfully!');
-      edudata.user = this.currentCandidate;
-       this.signupService.addEducation(edudata).subscribe(
-        {
-        next:(val)=>
-        {
-           console.log(val);
-        }
-      }
-       )
-   }
+  
 
    addProject(projectData : Project)
    {
@@ -108,6 +98,16 @@ export class CandidateHomeComponent implements OnInit
    }
     )
    }
+
+   
+   sidebar()
+   {
+      this.showSidebar = !this.showSidebar;
+   }
+
+
+
+
 
   logOut() {
    this.signupService.logOut();

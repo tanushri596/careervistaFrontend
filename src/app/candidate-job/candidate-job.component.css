@@ -1,0 +1,44 @@
+.sidebar
+  {
+    background-color: #164863; 
+    width: 300px; 
+    min-height: 100%; 
+    padding: 20px;
+    z-index:1;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .text-light.flex-column.sidebar ul li a.nav-link:hover,button.nav-link:hover {
+    background-color: #ffffff; 
+    color: #164863; 
+    border-radius:10px;
+  }
+
+ 
+.card-body p:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+   
+  }
+  
+.card-body p:nth-child(1) b {
+    font-size: 20px;
+   
+  }
+  
+  /* Add border style for job.location */
+ .card-body p:nth-child(1) span {
+    border: 2px solid black;
+    border-radius:30px;
+    background-color: black;
+    color:white;
+    padding: 5px;
+  }
+  

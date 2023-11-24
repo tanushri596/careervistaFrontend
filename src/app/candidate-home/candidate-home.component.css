@@ -14,3 +14,56 @@ input.ng-invalid.ng-touched{
     border-radius: 10px;
     box-sizing: border-box;
   }
+
+  .sidebar
+  {
+    background-color: #164863; 
+    width: 300px; 
+    min-height: 100%; 
+    padding: 20px;
+    z-index:1;
+    
+  }
+
+ 
+
+  .text-light.flex-column.sidebar ul li a.nav-link:hover,button.nav-link:hover {
+    background-color: #ffffff; 
+    color: #164863; 
+    border-radius:10px;
+  }
+
+  .jobpart
+  {
+     background-color:rgba(103, 174, 202, 0.643);
+     border-radius:10px;
+     margin-left:10px;
+     margin-right:10px;
+     width:900px;
+     padding:10px;
+  }
+
+  .jobpart button
+  {
+     border-radius:10px;
+     margin:5px; 
+     background-color: black;
+     color:white;
+  }
+
+  .jobpart .desc
+  {
+     background-color: #faf1f1;
+     border-radius:10px;
+     padding:10px;
+     
+  }
+
+  .jobBackground
+  {
+     background-image: url('../../assets/job.jpg');
+  }
+
+  
+
+  

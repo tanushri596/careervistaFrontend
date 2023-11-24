@@ -1,0 +1,8 @@
+.sidebar
+  {
+    background-color: #164863; 
+    width: 200px; 
+    min-height: 100%; 
+    padding: 20px;
+    z-index:1;
+  }

@@ -1,0 +1,19 @@
+.sidebar
+  {
+    background-color: #164863; 
+    width: 300px; 
+    min-height: 101.5vh; 
+    padding: 20px;
+    z-index:1;
+    position:absolute;
+  }
+
+  .blurred {
+    filter: blur(3px);
+    transition: filter 0.3s ease; 
+  }
+  .text-light.flex-column.sidebar ul li a.nav-link:hover,button.nav-link:hover {
+    background-color: #ffffff; 
+    color: #164863; 
+    border-radius:10px;
+  }

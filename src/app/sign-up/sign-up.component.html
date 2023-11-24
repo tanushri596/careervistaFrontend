@@ -20,9 +20,16 @@
           #firstName="ngModel"
         />
 
-        <div *ngIf="(firstName.dirty || firstName.touched) && (!candidateNameValidator(firstName.value)|| firstName.invalid)">
-
-          <small>Enter a valid First name which should not contain spaces and numbers</small>
+        <div
+          *ngIf="
+            (firstName.dirty || firstName.touched) &&
+            (!candidateNameValidator(firstName.value) || firstName.invalid)
+          "
+        >
+          <small
+            >Enter a valid First name which should not contain spaces and
+            numbers</small
+          >
         </div>
 
         <label for="name">Last Name*</label>
@@ -36,9 +43,17 @@
           #lastName="ngModel"
         />
 
-        <div *ngIf="(lastName.dirty || lastName.touched) && ( !candidateNameValidator(lastName.value) || lastName.invalid)">
-           <small>Enter a valid Last name which should not contain spaces and numbers</small>
-         </div>
+        <div
+          *ngIf="
+            (lastName.dirty || lastName.touched) &&
+            (!candidateNameValidator(lastName.value) || lastName.invalid)
+          "
+        >
+          <small
+            >Enter a valid Last name which should not contain spaces and
+            numbers</small
+          >
+        </div>
 
         <label for="email">Email*</label>
         <input
@@ -49,26 +64,22 @@
           ngModel
           required
           email
+          (ngModelChange)="userEmailValidationPerformed = false"
           #username="ngModel"
         />
 
         <div
           *ngIf="
-            ((username.dirty || username.touched) &&
-              candidateMailValidator(username.value)) 
+            (username.dirty || username.touched) && username.valid &&
+            candidateMailValidator(username.value)
           "
         >
           <small>Email exists</small>
         </div>
 
-        <div
-          *ngIf="((username.dirty || username.touched) && username.invalid)"
-          
-        >
+        <div *ngIf="(username.dirty || username.touched) && username.invalid">
           <small>Please enter a valid email</small>
         </div>
-
-
 
         <label for="password">Password*</label>
         <input
@@ -157,9 +168,11 @@
         <select
           name="designation"
           id="designation"
-          [(ngModel)]="selectedDesignation" >
+          [(ngModel)]="selectedDesignation"
+        >
           <option value="student">Student</option>
           <option value="workingProfessional">Working Professional</option>
+          <option value="unemployed">Unemployed</option>
         </select>
 
         <div *ngIf="selectedDesignation === 'workingProfessional'">
@@ -233,26 +246,30 @@
       </div>
 
       <label for="email">Email*</label>
-      <input
-        type="email"
-        id="username"
-        name="username"
-        placeholder="Your email"
-        ngModel
-        required
-        email
-        #username="ngModel"
-      />
+        <input
+          type="email"
+          id="username"
+          name="username"
+          placeholder="Your email"
+          ngModel
+          required
+          email
+          (ngModelChange)="companyEmailValidationPerformed = false"
+          #username="ngModel"
+        />
 
-      <div
-        *ngIf="
-          ((username.dirty || username.touched) &&
-            companyMailValidator(username.value)) ||
-          ((username.dirty || username.touched) && username.invalid)
-        "
-      >
-        <small>Please enter a unique and valid email</small>
-      </div>
+        <div
+          *ngIf="
+            (username.dirty || username.touched) && username.valid &&
+            companyMailValidator(username.value)
+          "
+        >
+          <small>Email exists</small>
+        </div>
+
+        <div *ngIf="(username.dirty || username.touched) && username.invalid">
+          <small>Please enter a valid email</small>
+        </div>
 
       <label for="password">Password*</label>
       <input
