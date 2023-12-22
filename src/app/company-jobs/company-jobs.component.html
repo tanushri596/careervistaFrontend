@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Candidate Portal Home Page</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+  <header style="background-color: #154863">
+    <nav
+      class="navbar navbar-expand-sm navbar-light"
+      style=" padding: 5px 20px;
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      min-height: 10vh;
+      background-color: #154863;"
+    >
+      
+
+     
+      <div class="container d-flex align-items-center justify-content-between">
+  
+          <!-- Brand/logo -->
+          <h2 class="navbar-brand" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
+            <b class="text-light">Career Vista</b>
+          </h2>
+      
+          <!-- Buttons aligned to the left -->
+          <div class="d-flex align-items-center">
+            
+            <a routerLink="/companyProfile">
+              <button
+                class="btn m-1"
+                
+                style="
+                  background-color: #164863;
+                  border-radius: 10px;
+                  color: white;
+                  font-family: 'Helvetica Neue', sans-serif;
+                "
+              >
+                <i
+                  class="fas fa-user"
+                  style="margin-right: 5px; font-size: 18px"
+                ></i>
+                <span
+                  style="
+                    font-weight: bold;
+                    font-size: larger;
+                    text-transform: capitalize;
+                  "
+                  >{{ currentCompany.name }}</span
+                >
+              </button>
+            </a>
+            <button class="btn m-1" (click)="logOut()" style="background-color: #164863; border-radius: 10px; color: white; font-family: 'Helvetica Neue', sans-serif;">
+              <i class="fas fa-power-off" style="margin-right: 5px; font-size: 18px;"></i>
+              <span style="font-weight: bold; font-size: larger;">Log Out</span>
+            </button>
+          </div>
+        </div>
+      
+    </nav>
+  </header>
+
+  <div style="padding-top: 15vh;" class="min-vh-100 text-dark" >
+
+
+    <ng-container *ngIf="allJobs.length > 0">
+        <div class="d-flex justify-content-center align-items-center">
+        <div class="table-responsive" style="width: 1200px;">
+          <table class="table table-bordered table-hover m-3">
+            <thead class="thead-dark">
+              <tr >
+                <th class="text-center"style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+                Tahoma, Geneva, Verdana, sans-serif" >Role</th>
+
+                <th class="text-center" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+                Tahoma, Geneva, Verdana, sans-serif">Location</th>
+                  <th class="text-center"style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+                  Tahoma, Geneva, Verdana, sans-serif">Package</th>
+                  <th  class="text-center"style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+                  Tahoma, Geneva, Verdana, sans-serif">Recruiter</th>
+                  <th class="text-center" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+                  Tahoma, Geneva, Verdana, sans-serif">Posting date</th>
+                  <th  class="text-center"style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+                  Tahoma, Geneva, Verdana, sans-serif">Applications</th>
+                <th  class="text-center"style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+                Tahoma, Geneva, Verdana, sans-serif">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let job of allJobs | paginate:{itemsPerPage:itemsPerPage,currentPage:p};" class="my-2">
+                <td class="text-center">{{ job.role}} </td>
+                <td class="text-center">{{ job.location}}</td>
+                
+
+               <td class="text-center">
+               {{job.salary}} lpa
+                    </td>
+                   
+                    <td class="text-center">
+                        {{job.userId}} 
+                             </td>
+                             <td class="text-center">
+                              {{job.postDate}}
+                                   </td>
+                             <td class="text-center">
+                                <button class="btn-success" (click)="getApplicationsViaJob(job.id)" style="border-radius:10px;">
+                                    Click here</button>
+                                     </td>
+                <td class="text-center">
+                  <button class="" style="border-radius:10px;" [disabled]="!job.status" (click)="openSweetAlert(job.id)"
+                  [ngStyle]="{'background-color': !job.status ? 'grey' : '#DF826C','color':!job.status?'black':'black'}"
+                  
+  >Remove</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <pagination-controls class="pagination" (pageChange)="p = $event">
+
+      </pagination-controls>
+    </ng-container>
+
+    <ng-container *ngIf="allJobs.length == 0">
+    <h2 class="text-center m-3"> Currently you do not have any job.</h2>
+    </ng-container>
+      
+ 
+
+  </div>
+ 
+
+  <footer>
+    <div class="text-center text-light py-2" style="background-color: #164863;">
+      <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+
+</body>
+</html>

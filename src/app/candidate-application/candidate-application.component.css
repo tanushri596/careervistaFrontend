@@ -2,20 +2,47 @@
   {
     background-color: #164863; 
     width: 300px; 
-    min-height: 101.5vh; 
+    min-height: 100vh; 
     padding: 20px;
     z-index:1;
     position:absolute;
   
   }
-
+  .pagination {
+    position: absolute;
+    bottom: 90px; /* Adjust the distance from the bottom */
+    text-align: center;
+    margin-left:40%;
+    
+  }
+  .table-responsive
+  {
+    overflow-x: hidden;
+  }
+  body{
+    overflow-x: hidden;
+    }
   .blurred {
     filter: blur(3px);
     transition: filter 0.3s ease; 
   }
 
-  .text-light.flex-column.sidebar ul li a.nav-link:hover,button.nav-link:hover {
+  .text-light.flex-column.sidebar ul li a.nav-link:hover,
+.text-light.flex-column.sidebar ul li button.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Set alpha (fourth value) to adjust transparency */
+  opacity: 1; /* Adjust opacity if needed */
+  color: #061c27;
+  border-radius: 10px;
+}
+
+/* Use ::ng-deep to apply styles inside a component */
+ .inactive-row {
+  color: rgb(226, 121, 121);
+}
+
+  .sidebar .active
+  {
     background-color: #ffffff; 
-    color: #164863; 
+    color: #154863; 
     border-radius:10px;
   }

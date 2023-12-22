@@ -15,54 +15,50 @@ input.ng-invalid.ng-touched{
     box-sizing: border-box;
   }
 
+  body {
+    overflow-x: hidden;
+     background-color: #F5F7F8;
+  }
+
   .sidebar
   {
-    background-color: #164863; 
+   
+    background-color: #154863; 
     width: 300px; 
-    min-height: 100%; 
+    min-height:100vh; 
     padding: 20px;
     z-index:1;
+    position:absolute;
     
+  
   }
 
  
 
-  .text-light.flex-column.sidebar ul li a.nav-link:hover,button.nav-link:hover {
+  .text-light.flex-column.sidebar ul li a.nav-link:hover,
+.text-light.flex-column.sidebar ul li button.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Set alpha (fourth value) to adjust transparency */
+  opacity: 1; /* Adjust opacity if needed */
+  color: #061c27;
+  border-radius: 10px;
+}
+
+
+  .sidebar .active
+  {
     background-color: #ffffff; 
-    color: #164863; 
+    color: #154863; 
     border-radius:10px;
   }
 
-  .jobpart
-  {
-     background-color:rgba(103, 174, 202, 0.643);
-     border-radius:10px;
-     margin-left:10px;
-     margin-right:10px;
-     width:900px;
-     padding:10px;
-  }
+  
+ 
 
-  .jobpart button
-  {
-     border-radius:10px;
-     margin:5px; 
-     background-color: black;
-     color:white;
-  }
+.blurred {
+  filter: blur(3px); 
+  transition: filter 0.1s ease;
+}
 
-  .jobpart .desc
-  {
-     background-color: #faf1f1;
-     border-radius:10px;
-     padding:10px;
-     
-  }
-
-  .jobBackground
-  {
-     background-image: url('../../assets/job.jpg');
-  }
 
   
 

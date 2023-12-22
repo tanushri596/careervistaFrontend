@@ -10,18 +10,60 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
 <body>
-  <header class="text-center m-0" style="background-color:#164863;">
+  <header class="text-center m-0"  >
     
-    <nav class="navbar navbar-expand-sm navbar-light" style="padding: 5px 20px;">
+    <nav class="navbar navbar-expand-sm navbar-light" style=" padding: 5px 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    min-height: 10vh;
+    background-color: #154863;">
 
+      <!-- Button to toggle the sidebar -->
       <button class="btn" (click)="sidebar()">
-        <i class="fa fa-bars fa-2x" style="color: white;"></i>
+        <i class="fas fa-bars fa-2x" style="color: white;"></i>
       </button>
     
-      <div class="container">
-        <h2 class="navbar-brand d-flex align-items-center justify-content-center" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
-          <b class="flex-row text-light">Career Vista</b>
+      <div class="container d-flex align-items-center justify-content-between">
+    
+        <!-- Brand/logo -->
+        <h2 class="navbar-brand" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
+          <b class="text-light">Career Vista</b>
         </h2>
+    
+        <!-- Buttons aligned to the left -->
+        <div class="d-flex align-items-center">
+          <a routerLink="/candidateProfile">
+            <button
+              class="btn m-1"
+              
+              style="
+                background-color: #164863;
+                border-radius: 10px;
+                color: white;
+                font-family: 'Helvetica Neue', sans-serif;
+              "
+            >
+              <i
+                class="fas fa-user"
+                style="margin-right: 5px; font-size: 18px"
+              ></i>
+              <span
+                style="
+                  font-weight: bold;
+                  font-size: larger;
+                  text-transform: capitalize;
+                "
+                >{{ currentCandidate.firstName }}</span
+              >
+            </button>
+          </a>
+    
+          <button class="btn m-1" (click)="logOut()" style="background-color: #164863; border-radius: 10px; color: white; font-family: 'Helvetica Neue', sans-serif;">
+            <i class="fas fa-power-off" style="margin-right: 5px; font-size: 18px;"></i>
+            <span style="font-weight: bold; font-size: larger;">Log Out</span>
+          </button>
+        </div>
       </div>
     </nav>
     
@@ -38,39 +80,44 @@
 
   <!-- sidebar started here -->
 
-  <div *ngIf="showSidebar" class="text-light flex-column mb-auto sidebar">
+  <div *ngIf="showSidebar" style="padding-top:15vh;" class="text-light flex-column mb-auto sidebar">
     <ul style="list-style-type: none; padding: 0; margin: 0;">
-      <li class="mb-3">
-        <a class="nav-link" style="font-size:20px;" routerLink="">
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateHome">
           <i class="fa fa-home mr-2 fa-1x"></i>Home
         </a>
       </li>
-      <li class="nav-item mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateProjects">
           <i class="fa fa-award  mr-2 fa-1x"></i>Projects
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateExperience">
           <i class="fa fa-user-tie mr-2 fa-1x"></i>Experience
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateJobs">
           <i class="fa fa-briefcase mr-2 fa-1x"></i>Jobs
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateApplications">
           <i class="fa fa-book-open mr-2 fa-1x"></i>Applications
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/chat">
+          <i class="fa fa-comment mr-2 fa-1x"></i>Chats
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateEducation">
           <i class="fa fa-user-graduate mr-2 fa-1x"></i>Education
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a>
         <button class="nav-link" style="font-size:20px;" (click)="logOut()">
           <i class="fa fa-power-off mr-2 fa-1x"></i>Log Out
@@ -86,114 +133,163 @@
  
 
 
-  <div *ngIf="!showSidebar" class="min-vh-100 text-dark" >
+  <div *ngIf="!showSidebar" style="padding-top: 15vh;" [class.blurred]="showSidebar" class="min-vh-100 text-dark" >
 
 
     <ng-container *ngIf="allApplications.length > 0">
-      <h4 class="text-center mt-2" style="text-shadow: 2px 2px 4px rgba(146, 146, 236, 0.7);">Take a look at your applications</h4>
-    <div class="d-flex justify-content-center align-items-center">
-        <div class="table-responsive" style="width: 1200px;">
-          <table class="table table-bordered table-hover m-3">
-            <thead class="thead-dark">
-              <tr >
-                <th class="text-center">Role</th>
-                <th class="text-center">Company</th>
-                
-                <th class="text-center">Date of Application</th>
-                <th class="text-center">Status</th>
-                <th  class="text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let application of allApplications" class="my-2">
-                <td class="text-center">{{ application.job.role }}</td>
-                <td class="text-center">{{ application.job.company.name }}</td>
-                <td class="text-center">{{application.applyDate}}</td>
+      <div class="d-flex justify-content-center align-items-center">
+       <div class="table-responsive mb-5" style="width: 1200px;">
+         
+         <table class="table table-bordered table-hover m-3">
+           <thead >
+             <tr >
+               <th class="text-center text-light" 
+               style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+               Tahoma, Geneva, Verdana, sans-serif">
+                 Role</th>
+               <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Company</th>
+               
+               <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Date of Application</th>
+               <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Status</th>
+               <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Activeness</th>
+               <th  class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Action</th>
+             </tr>
+           </thead>
+           <tbody>
+            
+             <tr *ngFor="let application of allApplications | paginate : { itemsPerPage: itemsPerPage, currentPage: p,};
+             " class="my-2" >
+               <td class="text-center">{{ application.role }}</td>
+               <td class="text-center">{{ application.companyName }}</td>
+               <td class="text-center">{{ application.applyDate }}</td>
                <ng-container *ngIf="application.status === 'Accepted'">
-                <td class="text-center bg-success">{{ application.status }}</td>
+                 <td class="text-center bg-success">{{ application.status }}</td>
                </ng-container>
                <ng-container *ngIf="application.status === 'Rejected'">
-                <td class="text-center bg-warning-subtle mt-1">{{ application.status }}</td>
+                 <td class="text-center bg-danger">{{ application.status }}</td>
                </ng-container>
-               
                <ng-container *ngIf="application.status === 'Pending'">
-                <td class="text-center">{{ application.status }}</td>
+                 <td class="text-center">{{ application.status }}</td>
                </ng-container>
-               
+             
+               <ng-container *ngIf="application.active">
+                 <td class="text-center">Active</td>
+               </ng-container>
+               <ng-container *ngIf="!application.active">
+                 <td class="text-center bg-secondary  ">Inactive</td>
+               </ng-container>
+             
               
-                <td class="text-center">
-                  <button class="btn btn-danger" (click)="delete(application.id)">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="allApplications.length == 0">
-    <h2 class="text-center m-3"> Currently you do not have any application.</h2>
-    </ng-container>
+               <td class="text-center">
+                 <button class="text-white p-1" style="border-radius:5px;" (click)="openSweetAlert(application.id)" [disabled]="application.withdrawn || (application.status == 'Accepted') || (!application.active) ||showSidebar"
+                 [ngStyle]="{'background-color': (application.withdrawn || application.status == 'Accepted' || !application.active) ? 'grey' : 'brown'}">
+  
+                Withdraw
+                  
+                 </button>
+               </td>
+             
+             </tr>
+             
+           
+           </tbody>
+         </table>
+       
+       </div>
+     </div>
+  
+     <pagination-controls class="pagination" (pageChange)="p = $event">
+  
+     </pagination-controls>
+   </ng-container>
+  
+   <ng-container *ngIf="allApplications.length == 0">
+   <h2 class="text-center m-3"> Currently you do not have any application.</h2>
+   </ng-container>
       
  
 
   </div>
 
   
-  <div *ngIf="showSidebar" class="min-vh-100 text-dark" [class.blurred]="showSidebar">
+ <div *ngIf="showSidebar" style="padding-top: 15vh;" class="min-vh-100 text-dark mb-5" [class.blurred]="showSidebar">
 
-    <ng-container *ngIf="allApplications.length > 0">
-      <h4 class="text-center mt-2" style="text-shadow: 2px 2px 4px rgba(146, 146, 236, 0.7);">Take a look at your applications</h4>
+  <ng-container *ngIf="allApplications.length > 0">
     <div class="d-flex justify-content-center align-items-center">
-        <div class="table-responsive" style="width: 1200px;">
-          <table class="table table-bordered table-hover m-3">
-            <thead class="thead-dark">
-              <tr >
-                <th class="text-center">Role</th>
-                <th class="text-center">Company</th>
-                
-                <th class="text-center">Date of Application</th>
-                <th class="text-center">Status</th>
-                <th  class="text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let application of allApplications" class="my-2">
-                <td class="text-center">{{ application.job.role }}</td>
-                <td class="text-center">{{ application.job.company.name }}</td>
-                <td class="text-center">{{application.applyDate}}</td>
-               <ng-container *ngIf="application.status === 'Accepted'">
-                <td class="text-center bg-success">{{ application.status }}</td>
-               </ng-container>
-               <ng-container *ngIf="application.status === 'Rejected'">
-                <td class="text-center bg-warning-subtle mt-1">{{ application.status }}</td>
-               </ng-container>
-               
-               <ng-container *ngIf="application.status === 'Pending'">
-                <td class="text-center">{{ application.status }}</td>
-               </ng-container>
-               
-              
-                <td class="text-center">
-                  <button class="btn btn-danger" (click)="delete(application.id)" [disabled]="showSidebar">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </ng-container>
+     <div class="table-responsive mb-5" style="width: 1200px;">
+       
+       <table class="table table-bordered table-hover m-3">
+         <thead >
+           <tr >
+             <th class="text-center text-light" 
+             style="background-color: #072541;font-size:19px;font-family:'Segoe UI', 
+             Tahoma, Geneva, Verdana, sans-serif">
+               Role</th>
+             <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Company</th>
+             
+             <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Date of Application</th>
+             <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Status</th>
+             <th class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Activeness</th>
+             <th  class="text-center text-light" style="background-color: #072541;font-size:19px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Action</th>
+           </tr>
+         </thead>
+         <tbody>
+          
+           <tr *ngFor="let application of allApplications | paginate : { itemsPerPage: itemsPerPage, currentPage: p,};
+           " class="my-2" >
+             <td class="text-center">{{ application.role }}</td>
+             <td class="text-center">{{ application.companyName }}</td>
+             <td class="text-center">{{ application.applyDate }}</td>
+             <ng-container *ngIf="application.status === 'Accepted'">
+               <td class="text-center bg-success">{{ application.status }}</td>
+             </ng-container>
+             <ng-container *ngIf="application.status === 'Rejected'">
+               <td class="text-center bg-danger">{{ application.status }}</td>
+             </ng-container>
+             <ng-container *ngIf="application.status === 'Pending'">
+               <td class="text-center">{{ application.status }}</td>
+             </ng-container>
+           
+             <ng-container *ngIf="application.active">
+               <td class="text-center">Active</td>
+             </ng-container>
+             <ng-container *ngIf="!application.active">
+               <td class="text-center bg-secondary  ">Inactive</td>
+             </ng-container>
+           
+            
+             <td class="text-center">
+               <button class="text-white p-1" style="border-radius:5px;" (click)="openSweetAlert(application.id)" [disabled]="application.withdrawn || (application.status == 'Accepted') || (!application.active) ||showSidebar"
+               [ngStyle]="{'background-color': (application.withdrawn || application.status == 'Accepted' || !application.active) ? 'grey' : 'brown'}">
 
-    <ng-container *ngIf="allApplications.length == 0">
-    <h2 class="text-center m-3"> Currently you do not have any application.</h2>
-    </ng-container>
-   
-  </div>
+              Withdraw
+                
+               </button>
+             </td>
+           
+           </tr>
+           
+         
+         </tbody>
+       </table>
+     
+     </div>
+   </div>
+
+   <pagination-controls class="pagination" (pageChange)="p = $event">
+
+   </pagination-controls>
+ </ng-container>
+
+ <ng-container *ngIf="allApplications.length == 0">
+ <h2 class="text-center m-3"> Currently you do not have any application.</h2>
+ </ng-container>
+  </div> 
  
 
 
   <footer>
-    <div class="text-center py-2" style="background-color: #9BBEC8;">
+    <div class="text-center text-light py-2" style="background-color: #164863;">
       <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
     </div>
   </footer>

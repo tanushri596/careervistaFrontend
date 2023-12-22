@@ -2,11 +2,10 @@
   {
     background-color: #164863; 
     width: 300px; 
-    height: 102.5vh; 
+    min-height: 100vh; 
     padding: 20px;
     z-index:1;
     position:absolute;
-    
    
   
   }
@@ -18,9 +17,19 @@
     
   }
 
-  .text-light.flex-column.sidebar ul li a.nav-link:hover,button.nav-link:hover {
+  .text-light.flex-column.sidebar ul li a.nav-link:hover,
+.text-light.flex-column.sidebar ul li button.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Set alpha (fourth value) to adjust transparency */
+  opacity: 1; /* Adjust opacity if needed */
+  color: #061c27;
+  border-radius: 10px;
+}
+
+
+  .sidebar .active
+  {
     background-color: #ffffff; 
-    color: #164863; 
+    color: #154863; 
     border-radius:10px;
   }
 
@@ -30,8 +39,12 @@
   small{
     color: red;
   }
-
-  input[type=text],[type=number], select, textarea,[type=date]{
+  body {
+    overflow-x: hidden;
+     background-color: #F5F7F8;
+  }
+  input[type=text],[type=number], select, textarea,[type=date]
+  {
     width: 100%;
     padding: 7px 7px;
     margin: 8px 0;

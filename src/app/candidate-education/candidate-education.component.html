@@ -10,24 +10,65 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
 <body>
-  <header class="text-center m-0" style="background-color:#164863;">
+  <header style="background-color: #154863">
+    <nav
+      class="navbar navbar-expand-sm navbar-light"
+      style="
+        padding: 5px 20px;
+        position: fixed;
+        width: 100%;
+        z-index: 999;
+        min-height: 10vh;
+        background-color: #154863;
+      "
+    >
+      <!-- Button to toggle the sidebar -->
+      <button class="btn" (click)="sidebar()">
+        <i class="fas fa-bars fa-2x" style="color: white;"></i>
+      </button>
     
-    <nav class="navbar navbar-expand-sm navbar-light" style="padding: 5px 20px;">
-
-        <button class="btn" (click)="sidebar()">
-          <i class="fa fa-bars fa-2x" style="color: white;"></i>
-        </button>
-      
-        <div class="container">
-          <h2 class="navbar-brand d-flex align-items-center justify-content-center" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
-            <b class="flex-row text-light">Career Vista</b>
-          </h2>
-          <button class="btn btn-primary m-1" data-bs-toggle="modal" data-bs-target="#addEducationModal" style="background-color: #164863; border-radius: 10px; color: white; font-family: 'Arial', sans-serif; font-size: 20px; text-shadow: 2px 2px 4px #000000;">
-            <i class="fa fa-briefcase"></i> Add Education
-        </button>
-        
+      <div class="container d-flex align-items-center justify-content-between">
+    
+        <!-- Brand/logo -->
+        <h2 class="navbar-brand" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
+          <b class="text-light">Career Vista</b>
+        </h2>
+    
+        <!-- Buttons aligned to the left -->
+        <div class="d-flex align-items-center">
+          <a routerLink="/candidateProfile">
+            <button
+              class="btn m-1"
+              
+              style="
+                background-color: #164863;
+                border-radius: 10px;
+                color: white;
+                font-family: 'Helvetica Neue', sans-serif;
+              "
+            >
+              <i
+                class="fas fa-user"
+                style="margin-right: 5px; font-size: 18px"
+              ></i>
+              <span
+                style="
+                  font-weight: bold;
+                  font-size: larger;
+                  text-transform: capitalize;
+                "
+                >{{ currentCandidate.firstName }}</span
+              >
+            </button>
+          </a>
+    
+          <button class="btn m-1" (click)="logOut()" style="background-color: #164863; border-radius: 10px; color: white; font-family: 'Helvetica Neue', sans-serif;">
+            <i class="fas fa-power-off" style="margin-right: 5px; font-size: 18px;"></i>
+            <span style="font-weight: bold; font-size: larger;">Log Out</span>
+          </button>
         </div>
-      </nav>
+      </div>
+    </nav>
     
   </header>
 
@@ -35,39 +76,44 @@
 
   <!-- sidebar started here -->
 
-  <div *ngIf="showSidebar" class="text-light flex-column mb-auto sidebar">
+  <div *ngIf="showSidebar" style="padding-top:15vh;" class="text-light flex-column mb-auto sidebar">
     <ul style="list-style-type: none; padding: 0; margin: 0;">
-      <li class="mb-3">
-        <a class="nav-link" style="font-size:20px;" routerLink="">
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateHome">
           <i class="fa fa-home mr-2 fa-1x"></i>Home
         </a>
       </li>
-      <li class="nav-item mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateProjects">
           <i class="fa fa-award  mr-2 fa-1x"></i>Projects
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateExperience">
           <i class="fa fa-user-tie mr-2 fa-1x"></i>Experience
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateJobs">
           <i class="fa fa-briefcase mr-2 fa-1x"></i>Jobs
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateApplications">
           <i class="fa fa-book-open mr-2 fa-1x"></i>Applications
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/chat">
+          <i class="fa fa-comment mr-2 fa-1x"></i>Chats
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
         <a class="nav-link" style="font-size:20px;" routerLink="/candidateEducation">
           <i class="fa fa-user-graduate mr-2 fa-1x"></i>Education
         </a>
       </li>
-      <li class="mb-3">
+      <li class="mb-3" routerLinkActive="active">
         <a>
         <button class="nav-link" style="font-size:20px;" (click)="logOut()">
           <i class="fa fa-power-off mr-2 fa-1x"></i>Log Out
@@ -83,7 +129,7 @@
  
 
 
-  <div *ngIf="!showSidebar" class="text-dark min-vh-100" >
+  <div *ngIf="!showSidebar" style="padding-top:10vh" class="text-dark min-vh-100" >
 
 
     <ng-container *ngIf="educations.length > 0">
@@ -91,6 +137,19 @@
         <div class="container">
            
         <div class="row">
+          <div class="col-lg-4">
+            <div class="container justify-content-between text-center m-3">
+              <div class="card m-2 rounded shadow" style="width: 300px; height:49vh; background-color: #ffffff; transition: box-shadow 0.3s;">
+                <div class="card-body text-dark">
+                  <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold;color:#154863">Add New Education</h5>
+                  <h5><i class="fa fa-user-graduate fa-4x my-3" ></i></h5>
+                  <button class="btn btn-primary text-light"  data-bs-toggle="modal" data-bs-target="#addEducationModal"  style="width: 100%; border-radius:80px;background-color:#154863;">
+                    <i class="fa fa-plus fa-2x"></i>
+                  </button>
+         </div>
+              </div>
+            </div>
+          </div>
             <ng-container *ngFor="let e of educations;">
               <div class="col-lg-4">
                 <div class="container justify-content-between m-3">
@@ -98,30 +157,19 @@
                         <div class="card-body text-dark">
                             <h5 class="card-title">
                                 <p class="text-center mb-4" style="font-size: 1.8rem; font-weight: bold; ">{{ e.courseName }}</p>
-                                <p ><i class="fas fa-university mr-2" style="color:orangered"></i>{{ e.institution }}</p>
+                                <p ><i class="fas fa-university mr-2" style="color:#154863"></i>{{ e.institution }}</p>
                             </h5>
                             
                             <p class="card-text" style="font-size: 1.2rem; ">
-                                <i class="fas fa-certificate mr-2" style="color:rgb(88, 88, 228)"></i>Marks: {{ e.marks }}%
+                                <i class="fas fa-certificate mr-2" style="color:#154863"></i>Marks: {{ e.marks }}%
                             </p>
                             <div class="my-2">
-                                <i class="fa fa-calendar mr-2" style="color:greenyellow"></i>{{ e.startDate}} to {{ e.endDate }}
+                                <i class="fa fa-calendar mr-2" style="color:#154863"></i>{{ e.startDate}} to {{ e.endDate }}
                             </div>
                             <hr>
-                            <button class="btn btn-danger mt-2" style="width: 100%;" (click)="delete(e.id)">Delete</button>
+                            <button class="btn btn-danger mt-2" style="width: 100%;" [disabled]="showSidebar" (click)="openSweetAlert(e.id)">Delete</button>
                         </div>
-                    </div>
-                    
-                    
-                    
-                    
-                    
-                      
-                      
-                      
-                      
-                      
-                
+                    </div>   
               </div>
             </div>
             </ng-container>
@@ -131,69 +179,105 @@
     </ng-container>
 
     <ng-container *ngIf="educations.length == 0">
-      <h3 class="text-center mt-3 mb-4" style="text-shadow: 2px 2px 4px rgba(146, 146, 236, 0.7);">Currently you do not have any added education</h3>
-    </ng-container>
+      <div class="container">
+        <div class="row">
+      <div class="col-lg-4">
+        <div class="container justify-content-between text-center m-3">
+          <div class="card m-2 rounded shadow" style="width: 300px; height:49vh; background-color: #ffffff; transition: box-shadow 0.3s;">
+            <div class="card-body text-dark">
+              <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold;color:#154863">Add New Education</h5>
+              <h5><i class="fa fa-user-graduate fa-4x my-3" ></i></h5>
+              <button class="btn btn-primary text-light"  data-bs-toggle="modal" data-bs-target="#addEducationModal"  style="width: 100%; border-radius:80px;background-color:#154863;">
+                <i class="fa fa-plus fa-2x"></i>
+              </button>
+     </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div> 
+  </ng-container>
       
       
    
 
   </div>
 
-  <div *ngIf="showSidebar" class="text-dark min-vh-100" [class.blurred]="showSidebar">
+  <div *ngIf="showSidebar"  style="padding-top:10vh" class="text-dark min-vh-100" [class.blurred]="showSidebar">
 
 
     <ng-container *ngIf="educations.length > 0">
 
-        <div class="container">
-            
-        <div class="row">
-            <ng-container *ngFor="let e of educations;">
-              <div class="col-lg-4">
-                <div class="container justify-content-between m-3">
-                    <div class="card m-2 rounded shadow" style="width: 300px; background-color: #ffffff;  transition: box-shadow 0.3s;">
-                        <div class="card-body text-dark">
-                            <h5 class="card-title">
-                                <p class="text-center mb-4" style="font-size: 1.8rem; font-weight: bold; ">{{ e.courseName }}</p>
-                                <p ><i class="fas fa-university mr-2" style="color:orangered"></i>{{ e.institution }}</p>
-                            </h5>
-                            
-                            <p class="card-text" style="font-size: 1.2rem; ">
-                                <i class="fas fa-certificate mr-2" style="color:rgb(88, 88, 228)"></i>Marks: {{ e.marks }}%
-                            </p>
-                            <div class="my-2">
-                                <i class="fa fa-calendar mr-2" style="color:greenyellow"></i>{{ e.startDate}} to {{ e.endDate }}
-                            </div>
-                            <hr>
-                            <button class="btn btn-danger mt-2" style="width: 100%;" (click)="delete(e.id)" [disabled]="showSidebar">Delete</button>
-                        </div>
-                    </div>
-                    
-                    
-                    
-                    
-                    
-                      
-                      
-                      
-                      
-                      
-                
-              </div>
+      <div class="container">
+         
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="container justify-content-between text-center m-3">
+            <div class="card m-2 rounded shadow" style="width: 300px; height:49vh; background-color: #ffffff; transition: box-shadow 0.3s;">
+              <div class="card-body text-dark">
+                <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold;color:#154863">Add New Education</h5>
+                <h5><i class="fa fa-user-graduate fa-4x my-3" ></i></h5>
+                <button class="btn btn-primary text-light"  data-bs-toggle="modal" data-bs-target="#addEducationModal"  style="width: 100%; border-radius:80px;background-color:#154863;">
+                  <i class="fa fa-plus fa-2x"></i>
+                </button>
+       </div>
             </div>
-            </ng-container>
+          </div>
         </div>
-    </div>
-   
-    </ng-container>
+          <ng-container *ngFor="let e of educations;">
+            <div class="col-lg-4">
+              <div class="container justify-content-between m-3">
+                  <div class="card m-2 rounded shadow" style="width: 300px; background-color: #ffffff;  transition: box-shadow 0.3s;">
+                      <div class="card-body text-dark">
+                          <h5 class="card-title">
+                              <p class="text-center mb-4" style="font-size: 1.8rem; font-weight: bold; ">{{ e.courseName }}</p>
+                              <p ><i class="fas fa-university mr-2" style="color:#154863"></i>{{ e.institution }}</p>
+                          </h5>
+                          
+                          <p class="card-text" style="font-size: 1.2rem; ">
+                              <i class="fas fa-certificate mr-2" style="color:#154863"></i>Marks: {{ e.marks }}%
+                          </p>
+                          <div class="my-2">
+                              <i class="fa fa-calendar mr-2" style="color:#154863"></i>{{ e.startDate}} to {{ e.endDate }}
+                          </div>
+                          <hr>
+                          <button class="btn btn-danger mt-2" style="width: 100%;" [disabled]="showSidebar" (click)="openSweetAlert(e.id)">Delete</button>
+                      </div>
+                  </div>   
+            </div>
+          </div>
+          </ng-container>
+      </div>
+  </div>
+ 
+  </ng-container>
 
-    <ng-container *ngIf="educations.length == 0">
-      <h3 class="text-center mt-3 mb-4" style="text-shadow: 2px 2px 4px rgba(146, 146, 236, 0.7);">Currently you do not have any added education</h3>
-    </ng-container>
-      
+  <ng-container *ngIf="educations.length == 0">
+    <div class="container">
+      <div class="row">
+    <div class="col-lg-4">
+      <div class="container justify-content-between text-center m-3">
+        <div class="card m-2 rounded shadow" style="width: 300px; height:49vh; background-color: #ffffff; transition: box-shadow 0.3s;">
+          <div class="card-body text-dark">
+            <h5 class="card-title" style="font-size: 1.5rem; font-weight: bold;color:#154863">Add New Education</h5>
+            <h5><i class="fa fa-user-graduate fa-4x my-3" ></i></h5>
+            <button class="btn btn-primary text-light"  data-bs-toggle="modal" data-bs-target="#addEducationModal"  style="width: 100%; border-radius:80px;background-color:#154863;">
+              <i class="fa fa-plus fa-2x"></i>
+            </button>
+   </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div> 
+</ng-container>
+    
       
    
 
   </div>
+
+  <!-- Modals start here -->
 
   <div class="modal fade" id="addEducationModal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog">
@@ -232,6 +316,9 @@
             <div *ngIf="startDate.invalid && (startDate.dirty || startDate.touched)">
               <small>Starting Date is required.</small>
             </div>
+            <div *ngIf="startDate.valid && (startDate.dirty || startDate.touched) && dateValidator(startDate.value)">
+              <small>Education must not be more than 60 years old.</small>
+            </div>
           
           
             <label for="endingDate">Ending Date*</label>
@@ -239,11 +326,21 @@
             <div *ngIf="endDate.invalid && (endDate.dirty || endDate.touched)">
               <small>Ending Date is required.</small>
             </div>
-
+  
+            <div *ngIf="endDate.valid && (endDate.dirty || endDate.touched) && dateValidator(endDate.value)">
+              <small>Education must not be more than 60 years old</small>
+            </div>
+  
+            <div *ngIf="endDate.valid && (endDate.dirty || endDate.touched) && 
+            startDate.valid && (startDate.dirty || startDate.touched) 
+            && differenceValidator(startDate.value,endDate.value)">
+              <small>Ending Date must be equal to or greater than the Starting Date</small>
+            </div>
             
           
          
-          <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal"  [disabled]="addEducationForm.invalid">Submit</button>
+          <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal"  [disabled]="addEducationForm.invalid|| dateValidator(startDate.value) || differenceValidator(startDate.value,endDate.value) || dateValidator(endDate.value)">Submit</button>
+          
         </form>
         </div>
         <!-- <div class="modal-footer">
@@ -254,10 +351,13 @@
   </div>
 
  
+ 
+<!-- Modals end here -->
+ 
 
 
   <footer>
-    <div class="text-center py-2" style="background-color: #9BBEC8;">
+    <div class="text-center text-light py-2" style="background-color: #164863;">
       <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
     </div>
   </footer>

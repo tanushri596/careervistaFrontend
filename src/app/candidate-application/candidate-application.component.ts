@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SignUpService } from '../services/sign-up.service';
-import { Application, Candidate } from '../model';
-
+import { Application, Candidate, CandidateDto } from '../model';
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-candidate-application',
   templateUrl: './candidate-application.component.html',
@@ -11,8 +11,10 @@ export class CandidateApplicationComponent implements OnInit {
   showSidebar: boolean = false;
   allApplications: Application[] = [];
   username: any = localStorage.getItem('username');
-  currentCandidate: Candidate = {} as Candidate;
+  currentCandidate: CandidateDto = {} as CandidateDto;
   currentCandidateId!: number;
+  itemsPerPage:number = 5;
+ p:number = 1;
 
   constructor(private signUpService: SignUpService) {}
 
@@ -22,10 +24,15 @@ export class CandidateApplicationComponent implements OnInit {
 
       this.currentCandidateId = this.currentCandidate.id;
 
-      const getApplications = this.signUpService.getAllApplications(this.currentCandidateId);
-      const observable1 = getApplications();
-      observable1.subscribe((data: Application[]) => {
-        this.allApplications = data;
+      this.signUpService.getAllApplications(this.currentCandidateId)
+      .subscribe((data: Application[]) => {
+        this.allApplications = data.sort((a, b) => {
+            const dateA = new Date(a.applyDate);
+          const dateB = new Date(b.applyDate);
+  
+          
+          return dateB.getTime() - dateA.getTime();
+      });
         
       });
 
@@ -40,25 +47,38 @@ export class CandidateApplicationComponent implements OnInit {
     this.showSidebar = !this.showSidebar;
   }
 
-  delete(appId:number)
-  {
-    const result = window.confirm("Do you want to delete ?")
-
-    if(result)
-    {
-       this.deleteApplication(appId);
-    }
-    
+  openSweetAlert(appId:number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, withdraw it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.withdrawApplication(appId);
+      }
+    });
   }
 
-  deleteApplication(appId:number)
+  withdrawApplication(appId:number)
   {
-    this.signUpService.deleteApplication(appId).subscribe(
+    let withdraw = true;
+    this.signUpService.withdrawApplication(appId,withdraw).subscribe(
       () => {
         
-        const index = this.allApplications.findIndex(app => app.id === appId);
-        
-          this.allApplications.splice(index, 1);
+        this.signUpService.getAllApplications(this.currentCandidateId)
+        .subscribe((data: Application[]) => {
+          this.allApplications = data.sort((a, b) => {
+             const dateA = new Date(a.applyDate);
+            const dateB = new Date(b.applyDate);
+    
+            
+            return dateB.getTime() - dateA.getTime();
+        });
+          
+        });
        
       },
       error => {

@@ -22,7 +22,7 @@ input[type=text],[type=email], select, [type=password],[type=date]{
   }
   
   input[type=submit] {
-    width: 100%;
+    width: 50%;
     background-color: #090a09;
     color: white;
     padding: 10px;
@@ -44,6 +44,8 @@ input[type=text],[type=email], select, [type=password],[type=date]{
   small{
     color: red;
   }
+
+  
 
   .signUpBackground
   {

@@ -11,8 +11,27 @@ export interface Candidate
   birthDate:string,
   phoneNumber:string,
   company: Company ,
-  designation:string
+  designation:string,
+  status:string
 }
+
+export interface CandidateDto
+{
+    id:number,
+  firstName:string,
+  lastName:string,
+ 
+  username:string,
+  role:string,
+  birthDate:string,
+  phoneNumber:string,
+  companyId:number,
+  designation:string,
+  status:string,
+  
+}
+
+
 
 export interface logIn
 {
@@ -34,6 +53,15 @@ export interface Company
   ceoName : string;
 }
 
+export interface CompanyDto
+{
+  id:number,
+  name:string,
+  
+  ceoName : string;
+  foundingDate:string
+}
+
 export interface Job 
 {
   id:number,
@@ -41,9 +69,12 @@ export interface Job
   description:string,
   salary:number,
   vacancy:number,
-  company:Company,
-  user:Candidate,
-  location:string
+  companyId:number
+  userId:number
+  location:string,
+  postDate:string,
+  status:boolean,
+  companyName:string
 }
 
 export interface Education
@@ -53,7 +84,7 @@ export interface Education
   marks:number,
   startDate:string,
   endDate:string,
-  user:Candidate,
+  userId:number,
   courseName:string
 }
 
@@ -64,7 +95,7 @@ export interface Project
   description:string,
   startDate:string,
   endDate:string,
-  user:Candidate
+  userId:number
 }
 
 export interface Experience
@@ -74,7 +105,7 @@ export interface Experience
   company:string,
   startDate:string,
   endDate:string,
-  user:Candidate,
+  userId:number,
   description:string
 }
 
@@ -83,7 +114,40 @@ export interface Application
   id:number,
   status:string,
   active:boolean,
-  job:Job,
-  user:Candidate,
-  applyDate:string
+  jobDto:Job,
+  userDto:CandidateDto
+  applyDate:string,
+  role:string,
+  companyId:number
+  withdrawn:boolean,
+  companyName:string,
+  
+}
+
+
+export interface Chat
+{
+  id:number,
+  sender:CandidateDto,
+  receiver:CandidateDto
+}
+
+export interface Message
+{
+   id:number,
+   sender:CandidateDto,
+   receiver:CandidateDto,
+   message:string,
+   channel:string,
+   time:string
+
+}
+
+export interface Page<T> {
+  content: T[];
+  number: number;
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  
 }

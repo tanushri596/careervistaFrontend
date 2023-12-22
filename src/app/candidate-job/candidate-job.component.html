@@ -18,141 +18,293 @@
   </head>
 
   <body>
-    <header  style="background-color: #154863">
-        
-      <nav class="navbar navbar-expand-sm navbar-light" style="padding: 10px;">
-
+    <header style="background-color: #154863">
+      <nav
+        class="navbar navbar-expand-sm navbar-light"
+        style="
+          padding: 5px 20px;
+          position: fixed;
+          width: 100%;
+          z-index: 999;
+          min-height: 10vh;
+          background-color: #154863;
+        "
+      >
         <button class="btn" (click)="sidebar()">
-          <i class="fa fa-bars fa-2x" style="color: white;"></i>
+          <i class="fas fa-bars fa-2x" style="color: white"></i>
         </button>
-      
-        <div class="container">
-          <h2 class="navbar-brand d-flex align-items-center justify-content-center" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
-            <b class="flex-row text-light">Career Vista</b>
+
+        <div
+          class="container d-flex align-items-center justify-content-between"
+        >
+          <h2
+            class="navbar-brand"
+            style="
+              font-family: Verdana, Geneva, Tahoma, sans-serif;
+              font-size: 24px;
+              margin-bottom: 0;
+            "
+          >
+            <b class="text-light">Career Vista</b>
           </h2>
+
+          <!-- Buttons aligned to the left -->
+          <div class="d-flex align-items-center">
+            <a routerLink="/candidateProfile">
+              <button
+                class="btn m-1"
+                style="
+                  background-color: #164863;
+                  border-radius: 10px;
+                  color: white;
+                  font-family: 'Helvetica Neue', sans-serif;
+                "
+              >
+                <i
+                  class="fas fa-user"
+                  style="margin-right: 5px; font-size: 18px"
+                ></i>
+                <span
+                  style="
+                    font-weight: bold;
+                    font-size: larger;
+                    text-transform: capitalize;
+                  "
+                  >{{ currentCandidate.firstName }}</span
+                >
+              </button>
+            </a>
+
+            <button
+              class="btn m-1"
+              (click)="logOut()"
+              style="
+                background-color: #164863;
+                border-radius: 10px;
+                color: white;
+                font-family: 'Helvetica Neue', sans-serif;
+              "
+            >
+              <i
+                class="fas fa-power-off"
+                style="margin-right: 5px; font-size: 18px"
+              ></i>
+              <span style="font-weight: bold; font-size: larger">Log Out</span>
+            </button>
+          </div>
         </div>
       </nav>
-      
-    
     </header>
+    <!-- Sidebar starts here -->
 
+    <div
+      *ngIf="showSidebar"
+      style="padding-top: 15vh"
+      class="text-light flex-column mb-auto sidebar"
+    >
+      <ul style="list-style-type: none; padding: 0; margin: 0">
+        <li class="mb-3" routerLinkActive="active">
+          <a
+            class="nav-link"
+            style="font-size: 20px"
+            routerLink="/candidateHome"
+          >
+            <i class="fa fa-home mr-2 fa-1x"></i>Home
+          </a>
+        </li>
+        <li class="mb-3" routerLinkActive="active">
+          <a
+            class="nav-link"
+            style="font-size: 20px"
+            routerLink="/candidateProjects"
+          >
+            <i class="fa fa-award mr-2 fa-1x"></i>Projects
+          </a>
+        </li>
+        <li class="mb-3" routerLinkActive="active">
+          <a
+            class="nav-link"
+            style="font-size: 20px"
+            routerLink="/candidateExperience"
+          >
+            <i class="fa fa-user-tie mr-2 fa-1x"></i>Experience
+          </a>
+        </li>
+        <li class="mb-3" routerLinkActive="active">
+          <a
+            class="nav-link"
+            style="font-size: 20px"
+            routerLink="/candidateJobs"
+          >
+            <i class="fa fa-briefcase mr-2 fa-1x"></i>Jobs
+          </a>
+        </li>
+        <li class="mb-3" routerLinkActive="active">
+          <a
+            class="nav-link"
+            style="font-size: 20px"
+            routerLink="/candidateApplications"
+          >
+            <i class="fa fa-book-open mr-2 fa-1x"></i>Applications
+          </a>
+        </li>
+        <li class="mb-3" routerLinkActive="active">
+          <a class="nav-link" style="font-size: 20px" routerLink="/chat">
+            <i class="fa fa-comment mr-2 fa-1x"></i>Chats
+          </a>
+        </li>
+        <li class="mb-3" routerLinkActive="active">
+          <a
+            class="nav-link"
+            style="font-size: 20px"
+            routerLink="/candidateEducation"
+          >
+            <i class="fa fa-user-graduate mr-2 fa-1x"></i>Education
+          </a>
+        </li>
+        <li class="mb-3" routerLinkActive="active">
+          <a>
+            <button class="nav-link" style="font-size: 20px" (click)="logOut()">
+              <i class="fa fa-power-off mr-2 fa-1x"></i>Log Out
+            </button>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sidebar ends here -->
     <!-- Job show starts here -->
 
-    <div *ngIf="!showSidebar" class="row min-vh-100">
-      <div class="col-3 text-light" style="background-color: #164863e7">
-        <div class="m-4">
-          <h5>Job Preferences</h5>
-
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="softwaredeveloper"
-              [(ngModel)]="softwareDeveloperChecked"
-              (change)="onCheckboxChange()"
-              id="softwaredeveloper"
-            />
-            <label class="form-check-label" for="softwaredeveloper">
-              Software Developer
-            </label>
-          </div>
-
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="businessanalyst"
-              [(ngModel)]="businessAnalystChecked"
-              (change)="onCheckboxChange()"
-              id="businessanalyst"
-            />
-            <label class="form-check-label" for="businessanalyst">
-              Business Analyst
-            </label>
-          </div>
-
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="tester"
-              [(ngModel)]="testerChecked"
-              (change)="onCheckboxChange()"
-              id="tester"
-            />
-            <label class="form-check-label" for="tester"> Tester </label>
-          </div>
+    <div
+      *ngIf="!showSidebar"
+      class="row pt-4 min-vh-100"
+      style="padding-top: 10vh; margin: 50px"
+    >
+    <div class="col-3 text-black" style="font-size: 18px; font-weight: 400; position: fixed; overflow-y: auto; height: 80vh; box-shadow: 0px 4px 8px rgba(1, 1, 1, 0.5);">
+      <div class="m-4">
+        <h5 class="mb-4" style="font-family: 'Arial', sans-serif; font-size: 22px; font-weight: bold;">Job Preferences</h5>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="software developer" [(ngModel)]="softwareDeveloperChecked" id="software developer" />
+          <label class="form-check-label" for="software developer">Software Developer</label>
         </div>
-        <div class="m-4">
-          <h5>Location Preferences</h5>
-
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="Remote"
-              [(ngModel)]="remoteChecked"
-              (change)="onCheckboxChange()"
-              id="Remote"
-            />
-            <label class="form-check-label" for="Remote"> Remote </label>
-          </div>
-
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="On-Site"
-              [(ngModel)]="onSiteChecked"
-              (change)="onCheckboxChange()"
-              id="On-Site"
-            />
-            <label class="form-check-label" for="On-Site"> On-Site </label>
-          </div>
-
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value="Hybrid"
-              [(ngModel)]="hybridChecked"
-              (change)="onCheckboxChange()"
-              id="Hybrid"
-            />
-            <label class="form-check-label" for="Hybrid"> Hybrid </label>
-          </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="business analyst" [(ngModel)]="businessAnalystChecked" id="business analyst" />
+          <label class="form-check-label" for="business analyst">Business Analyst</label>
+        </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="tester" [(ngModel)]="testerChecked" id="tester" />
+          <label class="form-check-label" for="tester">Tester</label>
         </div>
       </div>
-
-      <div class="col-9 flex-column  min-vh-100">
-        <div class="row">
-        <ng-container *ngFor="let job of filteredJobs; let i=index">
-          <div class="col-lg-6">
-            <div
-              class="card my-2 rounded"
-            style="width:400px;"
-            >
-              <!-- <img src="../../assets/job.jpg" class="card-img-top" alt="Service 1" /> -->
-              <div class="card-body text-black" style="background-color:#ebe3d5d8;">
-
-                <p><b style="font-family:'Lucida Sans';">{{ job.role }}</b><span><i class="fas fa-compass mr-2"></i>{{ job.location }}</span></p>
-
-                <p><i class="fa fa-home mr-2" style="color:rgb(243, 139, 20);" data-bs-toggle="tooltip" data-bs-placement="top" title="Company Name"></i>
-                    {{ job.company.name }}</p>
-               
-                <p><i class="fas fa-comments-dollar mr-2" style="color:rgb(24, 206, 24);" data-bs-toggle="tooltip" data-bs-placement="top" title="Salary"></i>
-                    {{ job.salary }} lpa</p>
-
-                <p><i class="fas fa-book mr-2" style="color:rgb(206, 24, 109);" data-bs-toggle="tooltip" data-bs-placement="top" title="Skills"></i>{{ job.description }}</p>
+    
+      <div class="m-4">
+        <h5 class="mb-4" style="font-family: 'Arial', sans-serif; font-size: 22px; font-weight: bold;">Location Preferences</h5>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Remote" [(ngModel)]="remoteChecked" id="Remote" />
+          <label class="form-check-label" for="Remote">Remote</label>
+        </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="On-Site" [(ngModel)]="onSiteChecked" id="On-Site" />
+          <label class="form-check-label" for="On-Site">On-Site</label>
+        </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Hybrid" [(ngModel)]="hybridChecked" id="Hybrid" />
+          <label class="form-check-label" for="Hybrid">Hybrid</label>
+        </div>
+      </div>
+    
+      <!-- Add a button to apply filters -->
+      <button class="btn text-light mx-5 mt-5" (click)="applyFilter(1)" style="background-color: #154863;"><i class="fas fa-filter mx-1"></i>Apply Filters</button>
+    </div>
+    
+      <div class="col-9" style="margin-left: 30%">
+        <div class="d-flex flex-wrap">
+          <ng-container
+            *ngFor="
+              let job of filteredJobs
+                | paginate : { itemsPerPage: itemsPerPage, currentPage: p,totalItems:totalItems};
+              let i = index
+            "
+          >
+            <div class="col-lg-12">
+              <div class="card mb-4 mx-5 rounded shadow-sm" style="width: 70%">
+                <div
+                  class="card-body"
+                  style="
                 
-                <p><i class="fas fa-users mr-2" style="color:rgb(17, 13, 252);"data-bs-toggle="tooltip" data-bs-placement="top" title="Vacancy"></i>{{ job.vacancy }}</p>
-                
-                
-                <div class="modal fade" id="companyModal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+                    background-color: #ffffff;
+                    -webkit-box-shadow: 6px 6px 10px -5px rgba(0, 0, 0, 0.54);
+                    -moz-box-shadow: 6px 6px 10px -5px rgba(0, 0, 0, 0.54);
+                    box-shadow: 6px 6px 10px -5px rgba(0, 0, 0, 0.54);
+                  "
+                >
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="mb-0">
+                        <b
+                          style="
+                            font-family: 'Arial', sans-serif;
+                            font-weight: bold;
+                            font-size: 25px;
+                          "
+                          >{{ job.role }}</b
+                        >
+                        <span class="ml-2"
+                          ><i class="fas fa-compass mr-2"></i
+                          >{{ job.location }}</span
+                        >
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="row mt-3">
+                    <div class="col-12">
+                      <i class="fas fa-book mr-2" style="color: #000000"></i>
+                      {{ job.description }}
+                    </div>
+                  </div>
+
+                  <div class="row mt-4">
+                    <div class="col-md-4 text-center">
+                      <div style="font-size: 18px; font-weight: bold">
+                        <i
+                          class="fas fa-comments-dollar fa-1x mr-2"
+                          style="color: #000000"
+                        ></i
+                        >Incentives
+                      </div>
+                      <p class="mb-0">{{ job.salary }} lpa</p>
+                    </div>
+
+                    <div class="col-md-4 text-center">
+                      <div style="font-size: 18px; font-weight: bold">
+                        <i class="fas fa-home mr-2" style="color: #000000"></i
+                        >Company
+                      </div>
+                      <p class="mb-0">{{ job.companyName }}</p>
+                    </div>
+
+                    <div class="col-md-4 text-center">
+                      <div style="font-size: 18px; font-weight: bold">
+                        <i class="fas fa-users mr-2" style="color: #000000"></i
+                        >Vacancies
+                      </div>
+                      <p class="mb-0">{{ job.vacancy }}</p>
+                      
+                    </div>
+                  </div>
+
+                  <!-- <div class="modal fade" id="companyModal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog">
                       <div class="modal-content">
-                        <div class="modal-header" style="background-color: #96B6C5;">
-                          <h2 class="modal-title text-center">About us</h2>
+                        <div class="modal-header" style="background-color: #154863;">
+                          <h2 class="modal-title text-light text-center">About us</h2>
                           <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -167,106 +319,288 @@
                        
                       </div>
                     </div>
+                  </div> -->
+
+                  <div class="text-center mt-4">
+                    <ng-container
+                      *ngIf="currentCandidate.id == job.userId"
+                    >
+                      <button
+                        class="btn btn-dark m-1"
+                        (click)="openSweetAlert(job.id)"
+                        [disabled]="showSidebar || !job.status"
+                      >
+                        Remove
+                      </button>
+                      <button
+                        class="btn btn-dark m-1"
+                        (click)="getApplicationsViaJob(job.id)"
+                        [disabled]="showSidebar"
+                      >
+                        Applications
+                      </button>
+                    </ng-container>
+
+                    <ng-container
+                      *ngIf="currentCandidate.id != job.userId"
+                      
+                    >
+                      <button
+                        class="btn btn-dark m-1 px-4"
+                        [disabled]="jobApplications.includes(job.id) || showSidebar"
+                        (click)="openSweetAlert1(job)"
+                      >
+                        {{
+                          jobApplications.includes(job.id) ? "Applied" : "Apply"
+                        }}
+                      </button>
+
+                      <!-- <button
+                        class="btn btn-dark m-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#companyModal"
+                      >
+                        About Us
+                      </button> -->
+                    </ng-container>
                   </div>
-               
-                  <p class="text-center">
-                  <ng-container *ngIf="currentCandidate.username === job.user.username"> 
-                    <button class="m-1 p-2 text-white" style="border-radius: 10px; width:100px;background-color:#164863" (click)="deleteJob(job.id)">
-                        Delete
-                    </button>
-                  </ng-container>
-                  <ng-container *ngIf="currentCandidate.username === job.user.username"> 
-                    <button class="m-1 p-2 text-white" style="border-radius: 10px; width:110px;background-color:#164863" (click)="getApplicationsViaJob(job.id)">
-                       Applications
-                    </button>
-                  </ng-container>
-                  <ng-container *ngIf="currentCandidate.username !== job.user.username"> 
-                    <button class="m-1 p-2 text-white" style="border-radius: 10px;width:100px;background-color:#164863" (click)="applyForJob(job)">
-                        Apply
-                    </button>
-                  </ng-container>
-                  <ng-container *ngIf="currentCandidate.username !== job.user.username">
-               <button class="m-1 p-2 text-white" data-bs-toggle="modal" data-bs-target="#companyModal" style="border-radius: 10px; width:100px;background-color:#164863">
-                  About Us
-                </button>
-                <div *ngIf="(i + 1) % 2 === 0" class="w-100"></div>
-            </ng-container>
-          </p> 
+                </div>
               </div>
             </div>
-          </div>
-        </ng-container>
-    </div>
+          </ng-container>
+        </div>
+        <pagination-controls
+        (pageChange)="onPageChange($event)"
+        class="pagination"
+        
+      
+  
+></pagination-controls>
       </div>
-    
     </div>
 
     <!-- Job show ends here -->
 
-    <!-- Sidebar starts here -->
-
-    <div *ngIf="showSidebar" class="text-light flex-column mb-auto sidebar">
-      <ul style="list-style-type: none; padding: 0; margin: 0;">
-        <li class="mb-3">
-          <a class="nav-link" style="font-size:20px;" routerLink="">
-            <i class="fa fa-home mr-2 fa-1x"></i>Home
-          </a>
-        </li>
-        <li class="nav-item mb-3">
-          <a class="nav-link" style="font-size:20px;" routerLink="/candidateProjects">
-            <i class="fa fa-award  mr-2 fa-1x"></i>Projects
-          </a>
-        </li>
-        <li class="mb-3">
-          <a class="nav-link" style="font-size:20px;" routerLink="/candidateExperience">
-            <i class="fa fa-user-tie mr-2 fa-1x"></i>Experience
-          </a>
-        </li>
-        <li class="mb-3">
-          <a class="nav-link" style="font-size:20px;" routerLink="/candidateJobs">
-            <i class="fa fa-briefcase mr-2 fa-1x"></i>Jobs
-          </a>
-        </li>
-        <li class="mb-3">
-          <a class="nav-link" style="font-size:20px;" routerLink="/candidateApplications">
-            <i class="fa fa-book-open mr-2 fa-1x"></i>Applications
-          </a>
-        </li>
-        <li class="mb-3">
-          <a class="nav-link" style="font-size:20px;" routerLink="/candidateEducation">
-            <i class="fa fa-user-graduate mr-2 fa-1x"></i>Education
-          </a>
-        </li>
-        <li class="mb-3">
-          <a>
-          <button class="nav-link" style="font-size:20px;" (click)="logOut()">
-            <i class="fa fa-power-off mr-2 fa-1x"></i>Log Out
-          </button>
-      </a>
-        </li>
-        
-      </ul>
+     <div
+      *ngIf="showSidebar"
+      [class.blurred]="showSidebar"
+      class="row pt-4 min-vh-100"
+      style="padding-top: 10vh;  margin: 50px"
+    >
+    <div class="col-3 text-black" style="font-size: 18px; font-weight: 400; position: fixed; overflow-y: auto; height: 80vh; box-shadow: 0px 4px 8px rgba(1, 1, 1, 0.5);">
+      <div class="m-4">
+        <h5 class="mb-4" style="font-family: 'Arial', sans-serif; font-size: 22px; font-weight: bold;">Job Preferences</h5>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="software developer" [(ngModel)]="softwareDeveloperChecked" id="software developer" />
+          <label class="form-check-label" for="software developer">Software Developer</label>
+        </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="business analyst" [(ngModel)]="businessAnalystChecked" id="business analyst" />
+          <label class="form-check-label" for="business analyst">Business Analyst</label>
+        </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="tester" [(ngModel)]="testerChecked" id="tester" />
+          <label class="form-check-label" for="tester">Tester</label>
+        </div>
+      </div>
+    
+      <div class="m-4">
+        <h5 class="mb-4" style="font-family: 'Arial', sans-serif; font-size: 22px; font-weight: bold;">Location Preferences</h5>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Remote" [(ngModel)]="remoteChecked" id="Remote" />
+          <label class="form-check-label" for="Remote">Remote</label>
+        </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="On-Site" [(ngModel)]="onSiteChecked" id="On-Site" />
+          <label class="form-check-label" for="On-Site">On-Site</label>
+        </div>
+    
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="Hybrid" [(ngModel)]="hybridChecked" id="Hybrid" />
+          <label class="form-check-label" for="Hybrid">Hybrid</label>
+        </div>
+      </div>
+    
+      <!-- Add a button to apply filters -->
+      <button class="btn text-light mx-5 mt-5" (click)="applyFilter(1)" style="background-color: #154863;"><i class="fas fa-filter mx-1"></i>Apply Filters</button>
     </div>
+    
+      <div class="col-9" style="margin-left: 30%">
+        <div class="d-flex flex-wrap">
+          <ng-container
+            *ngFor="
+              let job of filteredJobs
+                | paginate : { itemsPerPage: itemsPerPage, currentPage: p,totalItems:totalItems};
+              let i = index
+            "
+          >
+            <div class="col-lg-12">
+              <div class="card mb-4 mx-5 rounded shadow-sm" style="width: 70%">
+                <div
+                  class="card-body"
+                  style="
+                
+                    background-color: #ffffff;
+                    -webkit-box-shadow: 6px 6px 10px -5px rgba(0, 0, 0, 0.54);
+                    -moz-box-shadow: 6px 6px 10px -5px rgba(0, 0, 0, 0.54);
+                    box-shadow: 6px 6px 10px -5px rgba(0, 0, 0, 0.54);
+                  "
+                >
+                  <div class="row">
+                    <div class="col-12">
+                      <p class="mb-0">
+                        <b
+                          style="
+                            font-family: 'Arial', sans-serif;
+                            font-weight: bold;
+                            font-size: 25px;
+                          "
+                          >{{ job.role }}</b
+                        >
+                        <span class="ml-2"
+                          ><i class="fas fa-compass mr-2"></i
+                          >{{ job.location }}</span
+                        >
+                      </p>
+                    </div>
+                  </div>
 
+                  <div class="row mt-3">
+                    <div class="col-12">
+                      <i class="fas fa-book mr-2" style="color: #000000"></i>
+                      {{ job.description }}
+                    </div>
+                  </div>
+
+                  <div class="row mt-4">
+                    <div class="col-md-4 text-center">
+                      <div style="font-size: 18px; font-weight: bold">
+                        <i
+                          class="fas fa-comments-dollar fa-1x mr-2"
+                          style="color: #000000"
+                        ></i
+                        >Incentives
+                      </div>
+                      <p class="mb-0">{{ job.salary }} lpa</p>
+                    </div>
+
+                    <div class="col-md-4 text-center">
+                      <div style="font-size: 18px; font-weight: bold">
+                        <i class="fas fa-home mr-2" style="color: #000000"></i
+                        >Company
+                      </div>
+                      <p class="mb-0">{{ job.companyName }}</p>
+                    </div>
+
+                    <div class="col-md-4 text-center">
+                      <div style="font-size: 18px; font-weight: bold">
+                        <i class="fas fa-users mr-2" style="color: #000000"></i
+                        >Vacancies
+                      </div>
+                      <p class="mb-0">{{ job.vacancy }}</p>
+                      
+                    </div>
+                  </div>
+
+                  <!-- <div class="modal fade" id="companyModal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header" style="background-color: #154863;">
+                          <h2 class="modal-title text-light text-center">About us</h2>
+                          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body text-dark">
+                        <p>Name of the company : <b style="font-family: 'Courier New', Courier, monospace;">{{job.company.name}}</b></p>
+                         <p>CEO Name : {{job.company.ceoName}}</p>
+                         <p>Founding Date : {{job.company.foundingDate}}</p>
+                         <p></p>
+                         <p></p>
+                        </div>
+                       
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <div class="text-center mt-4">
+                    <ng-container
+                      *ngIf="currentCandidate.id == job.userId"
+                    >
+                      <button
+                        class="btn btn-dark m-1"
+                        (click)="openSweetAlert(job.id)"
+                        [disabled]="showSidebar || !job.status"
+                      >
+                        Remove
+                      </button>
+                      <button
+                        class="btn btn-dark m-1"
+                        (click)="getApplicationsViaJob(job.id)"
+                        [disabled]="showSidebar"
+                      >
+                        Applications
+                      </button>
+                    </ng-container>
+
+                    <ng-container
+                      *ngIf="currentCandidate.id != job.userId"
+                      
+                    >
+                      <button
+                        class="btn btn-dark m-1"
+                        [disabled]="jobApplications.includes(job.id) || showSidebar"
+                        (click)="openSweetAlert1(job)"
+                      >
+                        {{
+                          jobApplications.includes(job.id) ? "Applied" : "Apply"
+                        }}
+                      </button>
+
+                      <button
+                        class="btn btn-dark m-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#companyModal"
+                      >
+                        About Us
+                      </button>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <pagination-controls
+        (pageChange)="onPageChange($event)"
+        class="pagination"
+        
+      
   
+></pagination-controls>
+      </div>
+    </div>  
+
 
    
-
-    
-
-    <!-- Sidebar ends here -->
-
     <!-- footer starts here -->
 
     <footer>
-      <div class="text-center py-2" style="background-color: #9bbec8">
+      <div
+        class="text-center text-light py-2"
+        style="background-color: #154863; max-height: 10vh"
+      >
         <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
       </div>
     </footer>
 
     <!-- Footer ends here -->
 
-   
     <script
       src="http://code.jquery.com/jquery-3.3.1.min.js"
       integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="

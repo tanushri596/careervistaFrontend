@@ -7,65 +7,121 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 </head>
 <body>
-  <header class="text-center m-0" style="background-color:#164863; color: white;">
-    <nav class="navbar navbar-expand-sm navbar-light">
-      <button class="btn" (click)="sidebar()"><i class="fas fa-bars fa-2x" style="color:white"></i></button>
-      <div class="container">
-        <h2 class="navbar-brand d-flex align-items-center justify-content-center" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size:30px; color: white;">
-          <b class="flex-row"> Career Vista</b>
-        </h2>
-        <div class=" d-lg-block d-md-block d-sm-block ml-auto">
-          <!-- Your buttons here -->
+  <header style="background-color: #154863">
+    <nav
+      class="navbar navbar-expand-sm navbar-light"
+      style=" padding: 5px 20px;
+      position: fixed;
+      width: 100%;
+      z-index: 999;
+      min-height: 10vh;
+      background-color: #154863;"
+    >
+      
+
+     
+      <div class="container d-flex align-items-center justify-content-between">
+  
+          <!-- Brand/logo -->
+          <h2 class="navbar-brand" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
+            <b class="text-light">
+              Career Vista</b>
+          </h2>
+      
+          <!-- Buttons aligned to the left -->
+          <div class="d-flex align-items-center">
+            
+            <a routerLink="/companyProfile">
+              <button
+                class="btn m-1"
+                
+                style="
+                  background-color: #164863;
+                  border-radius: 10px;
+                  color: white;
+                  font-family: 'Helvetica Neue', sans-serif;
+                "
+              >
+                <i
+                  class="fas fa-user"
+                  style="margin-right: 5px; font-size: 18px"
+                ></i>
+                <span
+                  style="
+                    font-weight: bold;
+                    font-size: larger;
+                    text-transform: capitalize;
+                  "
+                  >{{ currentCompany.name }}</span
+                >
+              </button>
+            </a>
+            <button class="btn m-1" (click)="logOut()" style="background-color: #164863; border-radius: 10px; color: white; font-family: 'Helvetica Neue', sans-serif;">
+              <i class="fas fa-power-off" style="margin-right: 5px; font-size: 18px;"></i>
+              <span style="font-weight: bold; font-size: larger;">Log Out</span>
+            </button>
+          </div>
         </div>
-      </div>
+      
     </nav>
   </header>
 
-  <div *ngIf="showSidebar" class="text-light flex-column mb-auto sidebar">
-    <ul style="list-style-type: none; padding: 0; margin: 0;">
-      <li class="mb-3">
-        <a class="nav-link" routerLink="">
-          <i class="fa fa-home mr-2"></i>Home
-        </a>
-      </li>
-      <li class="nav-item mb-3">
-        <a class="nav-link" routerLink="/candidateProjects">
-          <i class="fa fa-award  mr-2"></i>Projects
-        </a>
-      </li>
-      <li class="mb-3">
-        <a class="nav-link" routerLink="/candidateExperience">
-          <i class="fa fa-user-tie mr-2"></i>Experience
-        </a>
-      </li>
-      <li class="mb-3">
-        <a class="nav-link" routerLink="/candidateJobs">
-          <i class="fa fa-briefcase mr-2"></i>Jobs
-        </a>
-      </li>
-      <li class="mb-3">
-        <a class="nav-link" routerLink="/candidateApplications">
-          <i class="fa fa-book-open mr-2"></i>Applications
-        </a>
-      </li>
-      <li class="mb-3">
-        <a class="nav-link" routerLink="/candidateEducation">
-          <i class="fa fa-user-graduate mr-2"></i>Education
-        </a>
-      </li>
-      <li class="mb-3">
-        <button class="nav-link" (click)="logOut()">
-          <i class="fa fa-power-off mr-2"></i>Log Out
-        </button>
-      </li>
+  <div class="min-vh-100" style="padding-top:15vh;">
+   
+      <div class="row container justify-content-center mx-5 px-5">
       
-    </ul>
-  </div>
-
-  <div *ngIf="!showSidebar" class="min-vh-100"></div>
+        <div class="card col-5 text-center text-light my-4 mx-2" style="height:200px; background-color: #427D9D;">
+          <div class="card-body">
+            <h4 class="card-title">Employees</h4>
+            <h4 class="display-6">
+              <i class="fas fa-user mr-3"></i>{{allEmployees.length}}
+            </h4>
+            <a routerLink="/companyEmployees" class="btn btn-outline-light btn-md">
+              View
+            </a>
+          </div>
+        </div>
+      
+        <div class="card col-5 text-center text-light my-4 mx-2" style="height:200px; background-color: #427D9D;">
+          <div class="card-body">
+            <h4 class="card-title">Jobs</h4>
+            <h4 class="display-6">
+              <i class="fas fa-briefcase mr-3"></i>{{allJobs.length}}
+            </h4>
+            <a routerLink="/companyJobs" class="btn btn-outline-light btn-md">
+              View
+            </a>
+          </div>
+        </div>
+     
+    </div>
+    <div class="col-12 my-container">
+     
+    
+      <div class="chart-container p-4 ">
+        <div >
+          <h4 class="text-center" style="font-size:30px;">Yearwise Analysis of Jobs and Applications</h4>
+          <button style="margin-left:90%; width:90px;" class="btn-sm " >Select Year
+             <select class="form-control" [(ngModel)]="currentYear" (change)="onYearChange()">
+              <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+            </select>
+          
+        </button>
+        </div>
+        <canvas id="MyChart">{{ chart }}</canvas>
+      </div>
+    </div>
+    
+    
+    
+     
+      
+    </div>
+   
+ 
 
   <footer>
-    <div class="text-center py-2" style="background-color: #9BBEC8;">
+    <div class="text-center text-light py-2" style="background-color: #164863;">
       <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
     </div>
   </footer>

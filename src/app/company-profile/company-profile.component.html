@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Candidate Portal Home Page</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body >
+    <header style="background-color: #154863">
+      <nav
+        class="navbar navbar-expand-sm navbar-light"
+        style=" padding: 5px 20px;
+        position: fixed;
+        width: 100%;
+        z-index: 999;
+        min-height: 10vh;
+        background-color: #154863;"
+      >
+        
+
+       
+        <div class="container d-flex align-items-center justify-content-between">
+    
+            <!-- Brand/logo -->
+            <h2 class="navbar-brand" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
+              <b class="text-light">Career Vista</b>
+            </h2>
+        
+            <!-- Buttons aligned to the left -->
+            <div class="d-flex align-items-center">
+              
+        
+              <button class="btn m-1" (click)="logOut()" style="background-color: #164863; border-radius: 10px; color: white; font-family: 'Helvetica Neue', sans-serif;">
+                <i class="fas fa-power-off" style="margin-right: 5px; font-size: 18px;"></i>
+                <span style="font-weight: bold; font-size: larger;">Log Out</span>
+              </button>
+            </div>
+          </div>
+        
+      </nav>
+    </header>
+
+<!-- Sidebar starts here -->
+
+
+
+<!-- Sidebar ends here -->
+
+
+<div class="min-vh-100 " style="padding-top: 15vh; padding-bottom: 15vh;">
+
+   
+  
+    
+     
+  
+      <div class="row m-2">
+        <div class="col-lg-4">
+          <div class="card mb-4 shadow">
+            <div class="card-body text-center">
+              <img src="../../assets/profile.jpeg" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 200px;height:200px;object-fit: cover;">
+              <h5 class="my-3" style="text-transform: capitalize;">{{currentCompany.name}} </h5>
+              <p class="text-muted mb-1">{{currentCompany.name}}</p> 
+              </div>
+          </div>
+           
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4 shadow">
+            <div class="card-body">
+              
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{currentCompany.name}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">CEO Name</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{currentCompany.ceoName}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Phone Number</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{currentCompany.name}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Founding Date</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{currentCompany.foundingDate}}</p>
+                </div>
+              </div>
+               <hr>
+              <!-- <button class="btn" data-bs-toggle = "modal" data-bs-target="#editProfileModal" style="background-color: #154863;color:white;">Edit</button>
+               -->
+            </div>
+          </div>
+          
+            
+          </div> 
+        </div>
+      </div>
+    
+  
+    
+      
+   
+
+
+
+
+<!-- <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="editCompanyProfile.reset()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form #editCompanyProfile="ngForm" (ngSubmit)="saveChanges(); ">
+          <div class="mb-3">
+            <label for="editEmail" class="form-label">Email</label>
+            <input type="text" class="form-control" value={{currentCompany.username}} id="editEmail"  disabled>
+          </div>
+          <div class="mb-3">
+            <label for="contactNumber">Phone Number*</label>
+            <input
+            
+              type="text"
+              id="phoneNumber"
+              placeholder=""
+              name="phoneNumber"
+              inputmode="numeric"
+              ngModel
+              required
+              [(ngModel)]="currentCompany.phoneNumber"
+              minlength="10"
+              maxlength="10"
+              #phoneNumber="ngModel"
+            />
+    
+            <div
+              *ngIf="
+                (phoneNumber.touched || phoneNumber.dirty) &&
+                !phoneNumberValidator(phoneNumber.value)
+              "
+            >
+              <small>please enter a valid phone number</small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="date">Birth Date*</label>
+        <input
+        class="form-control"
+          type="date"
+          id="birthDate"
+          name="birthDate"
+          ngModel
+          [(ngModel)]="currentCompany.foundingDate"
+          required
+          #birthDate="ngModel"
+        />
+       </div>
+          <button type="submit" data-bs-dismiss="modal" class="btn text-light" style="background-color: #154863;" [disabled]="editCompanyProfile.invalid">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- <div class="profile">
+  <div class="text-center my-2">
+     
+    <img src="../../assets/profile.jpeg" alt="Profile Image" class="img img-fluid rounded-circle">
+
+    <hr class="bg-primary"> 
+
+   <ng-container *ngIf="currentCandidate.designation!='student' && currentCandidate.status=='Recruiter'">
+   <button class="btn text-light p-4" style="background-color: #154863;width:20%;height:20%" data-bs-toggle="modal" data-bs-target="#postJobModal">
+       <i class="fas fa-pencil-alt fa-2x mb-3"></i> 
+        <h5 class="card-title"style="">Post a job</h5>
+      
+           
+    </button>
+  </ng-container>
+  </div>
+
+
+</div> -->
+
+
+    
+
+
+
+   
+
+
+
+    <!-- footer starts here -->
+
+    <footer>
+      <div
+        class="text-center text-light py-2"
+        style="background-color: #154863"
+      >
+        <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Footer ends here -->
+
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

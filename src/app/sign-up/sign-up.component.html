@@ -1,14 +1,14 @@
 <div class="signUpBackground" *ngIf="candidate">
   <div
     class="form col-lg-6"
-    style="background-color: #add8e6; color: black; border-radius: 30px"
+    style=" color: white; border-radius: 30px"
   >
-    <h2 id="registration">Candidate Form</h2>
+    <h2 id="registration" class="text-center text-dark" style="font-weight: 400;font-family: 'Times New Roman', Times, serif;">Candidate Form</h2>
     <form
       (ngSubmit)="onCandidateSubmit(candidateSignUpForm.value)"
       #candidateSignUpForm="ngForm"
     >
-      <div>
+      <div class="row g-3">
         <label for="name">First Name*</label>
         <input
           type="text"
@@ -198,16 +198,17 @@
           "
         />
 
-        <h5 style="margin: 5px">
-          Already a User ??
-          <button style="border: 1px solid black; border-radius: 6px">
-            <a routerLink="/logIn" style="text-decoration: none; color: black"
-              >Sign In here</a
-            >
-          </button>
-        </h5>
+       
       </div>
     </form>
+    <h5 style="margin: 5px;">
+      Already a User ??
+      <button style="border: 1px solid black; border-radius: 6px">
+        <a routerLink="/logIn" style="text-decoration: none; color: black"
+          >Sign In here</a
+        >
+      </button>
+    </h5>
   </div>
 </div>
 
@@ -377,14 +378,8 @@
         "
       />
 
-      <h5 style="margin: 5px">
-        Already a User ??
-        <button style="border: 1 px solid black; border-radius: 6px">
-          <a routerLink="/logIn" style="text-decoration: none; color: black"
-            >Sign In here</a
-          >
-        </button>
-      </h5>
+     
     </form>
   </div>
 </div>
+

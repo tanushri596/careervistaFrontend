@@ -11,15 +11,21 @@ import { JobApplicationsComponent } from './job-applications/job-applications.co
 import { CandidateProjectComponent } from './candidate-project/candidate-project.component';
 import { CandidateExperienceComponent } from './candidate-experience/candidate-experience.component';
 import { CandidateEducationComponent } from './candidate-education/candidate-education.component';
+import { ChatComponent } from './chat/chat.component';
+import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
+import { CompanyEmployeesComponent } from './company-employees/company-employees.component';
+import { HomeGuard} from './routeGuards/home.guard';
+import { CompanyJobsComponent } from './company-jobs/company-jobs.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
+
 // import { logInRouteGuard } from './routeGuards/log-in-route.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'candidateHome', pathMatch: 'full'},
-  { path: '', redirectTo: 'companyHome', pathMatch: 'full'},
-  { path: '', redirectTo: 'logIn', pathMatch: 'full'},
-  { path: 'logIn', component: LogInComponent},
-  { path: 'signUp', component: SignUpComponent},
+   { path: '',component:LogInComponent,canActivate: [HomeGuard]},
+   { path: 'logIn', component: LogInComponent},
+    { path: 'signUp', component: SignUpComponent},
   { path: 'candidateHome', component: CandidateHomeComponent,canActivate:[logInRouteGuard]},
+  { path: 'candidateProfile', component: CandidateProfileComponent,canActivate:[logInRouteGuard]},
   { path: 'companyHome', component: CompanyHomeComponent,canActivate:[logInRouteGuard] },
   { path: 'candidateJobs', component: CandidateJobComponent,canActivate:[logInRouteGuard] }, 
   {path:'candidateApplications',component:CandidateApplicationComponent,canActivate:[logInRouteGuard]},
@@ -27,6 +33,10 @@ const routes: Routes = [
   {path:'candidateProjects',component:CandidateProjectComponent,canActivate:[logInRouteGuard]},
   {path:'candidateExperience',component:CandidateExperienceComponent,canActivate:[logInRouteGuard]},
   {path:'candidateEducation',component:CandidateEducationComponent,canActivate:[logInRouteGuard]},
+  {path:'chat',component:ChatComponent,canActivate:[logInRouteGuard]},
+  {path:'companyEmployees',component:CompanyEmployeesComponent,canActivate:[logInRouteGuard]},
+  {path:'companyJobs',component:CompanyJobsComponent,canActivate:[logInRouteGuard]},
+  {path:'companyProfile',component:CompanyProfileComponent,canActivate:[logInRouteGuard]},
   
   { path: '**', component: LogInComponent },
 ];

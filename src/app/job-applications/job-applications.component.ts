@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Application } from '../model';
+import { Application, Candidate, CandidateDto, Chat, Company, CompanyDto } from '../model';
 import { SignUpService } from '../services/sign-up.service';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 
@@ -11,27 +11,67 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 export class JobApplicationsComponent implements OnInit
  {
 
+  currentCandidate!:CandidateDto;
+  currentCompany!:CompanyDto;
+  candidateDesignation!:string;
+  candidateName!:string;
   jobApplications:Application[] = [];
   showSidebar:boolean = false;
   jobName:string="";
   selectedStatus:string="Pending";
+  currentChat:Chat={} as Chat;
+  username:any = localStorage.getItem('username');
+  AllChats:any = [];
+  role:any= localStorage.getItem('role');
+  p:number = 1;
+  itemsPerPage :number = 5;
+  
   
 
   constructor(private signupService : SignUpService,private route:ActivatedRoute){}
+
   ngOnInit(): void 
   {
+    if(localStorage.getItem('role')=='candidate')
+    {
+    this.signupService.getCurrentCandidate(this.username).subscribe(
+      data=>
+      {
+         this.currentCandidate = data;
+         this.candidateDesignation = data.designation;
+         this.candidateName = data.firstName;
+
+        
+        
+         
+      })
+    }
+    else
+    {
+    this.signupService.getCurrentCompany(this.username).subscribe(
+      data=>
+      {
+         this.currentCompany = data;
+        
+         
+      })
+    }
 
     this.route.queryParams.subscribe(params => {
      
       const jobId = params['jobId'];
   
-      const getApplications = this.signupService.getAllApplicationsViaJob(jobId);
-      const observable = getApplications();
-      observable.subscribe((data:Application[])=>
+      this.signupService.getAllApplicationsViaJob(jobId).subscribe((data:Application[])=>
       {
-        this.jobApplications = data;
-        this.jobName = data[0].job.role;
         console.log(data);
+        this.jobApplications = data.sort((a, b) => {
+           const dateA = new Date(a.applyDate);
+          const dateB = new Date(b.applyDate);
+  
+           return dateB.getTime() - dateA.getTime();
+      });
+        this.jobName = data[0].jobDto.role;
+      //   console.log(data);
       })
       
       
@@ -45,6 +85,8 @@ export class JobApplicationsComponent implements OnInit
   capitalizeFirstLetter(value: string): string {
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
+
+ 
 
   updateStatus(appId:number,appStatus:string)
   {
@@ -60,6 +102,15 @@ export class JobApplicationsComponent implements OnInit
       }
     );
     
+  }
+  addToChat(receiver:CandidateDto)
+  {
+   this.currentChat.sender = this.currentCandidate;
+   this.currentChat.receiver = receiver;
+
+   
+    
+    this.signupService.addChat(this.currentChat).subscribe();
   }
   sidebar()
   {

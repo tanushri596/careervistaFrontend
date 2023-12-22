@@ -1,0 +1,17 @@
+.pagination {
+    position: absolute;
+    bottom:90px; /* Adjust the distance from the bottom */
+    text-align: center;
+    margin-left:35%;
+    
+  }
+
+  .table-responsive
+  {
+    overflow-x:hidden;
+  }
+
+  .disabled
+  {
+    background-color: grey;
+  }

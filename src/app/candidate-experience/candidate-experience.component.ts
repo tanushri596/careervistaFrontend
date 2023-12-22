@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { SignUpService } from '../services/sign-up.service';
-import { Candidate, Experience } from '../model';
+import { Candidate, CandidateDto, Experience } from '../model';
 import { ToasterService } from '../services/toaster.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-candidate-experience',
@@ -14,7 +15,8 @@ export class CandidateExperienceComponent {
   showSidebar:boolean = false;
   username:any = localStorage.getItem("username");
   showDescriptionMap: { [id: number]: boolean } = {};
-  currentCandidate!:Candidate;
+  currentCandidate!:CandidateDto;
+  yearDifference:number = 0;
 
 
 
@@ -58,11 +60,35 @@ export class CandidateExperienceComponent {
     console.log(itemId);
     this.showDescriptionMap[itemId] = !this.showDescriptionMap[itemId];
 }
+dateValidator(startDate: string): boolean {
+  const inputDate = new Date(startDate);
+  const comparisonDate = new Date();
 
+  this.yearDifference =
+    comparisonDate.getFullYear() - inputDate.getFullYear();
+
+  if (
+    comparisonDate.getMonth() < inputDate.getMonth() ||
+    (comparisonDate.getMonth() === inputDate.getMonth() &&
+      comparisonDate.getDate() < inputDate.getDate())
+  ) {
+    this.yearDifference--;
+  }
+
+  
+
+  if (this.yearDifference < 60 && this.yearDifference >= 0) return false;
+  return true;
+}
+
+differenceValidator(startDate:string,endDate:string):boolean
+{
+    return new Date(startDate) > new Date(endDate);
+}
 addExperience(experienceData : Experience)
 {
  this.toasterService.showNotification('Experience added successfully!');
- experienceData.user = this.currentCandidate;
+ experienceData.userId = this.currentCandidate.id;
  //console.log(projectData);
  this.signUpService.addExperience(experienceData).subscribe(
   {
@@ -88,14 +114,19 @@ addExperience(experienceData : Experience)
  
 }
 
-delete(expId:number)
-{
-  const result = window.confirm("Do you want to delete ?");
-
-  if(result)
-  {
-    this.deleteExperience(expId);
-  }
+openSweetAlert(expId:number) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'You won\'t be able to revert this!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.deleteExperience(expId);
+    }
+  });
 }
 
 deleteExperience(expId:number)

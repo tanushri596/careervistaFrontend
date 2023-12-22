@@ -1,8 +1,17 @@
-.sidebar
-  {
-    background-color: #164863; 
-    width: 200px; 
-    min-height: 100%; 
-    padding: 20px;
-    z-index:1;
+body {
+    overflow-x: hidden;
+     background-color: #F5F7F8;
   }
+
+  .my-container {
+    
+    padding: 15px;
+    
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle box shadow */
+  }
+  
+  .chart-container {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  

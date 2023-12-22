@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Candidate Portal Home Page</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+      integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body >
+    <header style="background-color: #154863">
+      <nav
+        class="navbar navbar-expand-sm navbar-light"
+        style=" padding: 5px 20px;
+        position: fixed;
+        width: 100%;
+        z-index: 999;
+        min-height: 10vh;
+        background-color: #154863;"
+      >
+        <button class="btn" (click)="sidebar()">
+          <i class="fas fa-bars fa-2x" style="color: white"></i>
+        </button>
+
+       
+        <div class="container d-flex align-items-center justify-content-between">
+    
+            <!-- Brand/logo -->
+            <h2 class="navbar-brand" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 24px; margin-bottom: 0;">
+              <b class="text-light">Career Vista</b>
+            </h2>
+        
+            <!-- Buttons aligned to the left -->
+            <div class="d-flex align-items-center">
+              
+        
+              <button class="btn m-1" (click)="logOut()" style="background-color: #164863; border-radius: 10px; color: white; font-family: 'Helvetica Neue', sans-serif;">
+                <i class="fas fa-power-off" style="margin-right: 5px; font-size: 18px;"></i>
+                <span style="font-weight: bold; font-size: larger;">Log Out</span>
+              </button>
+            </div>
+          </div>
+        
+      </nav>
+    </header>
+
+<!-- Sidebar starts here -->
+
+<div *ngIf="showSidebar" style="padding-top:15vh;" class="text-light flex-column mb-auto sidebar">
+    <ul style="list-style-type: none; padding: 0; margin: 0;">
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateHome">
+          <i class="fa fa-home mr-2 fa-1x"></i>Home
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateProjects">
+          <i class="fa fa-award  mr-2 fa-1x"></i>Projects
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateExperience">
+          <i class="fa fa-user-tie mr-2 fa-1x"></i>Experience
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateJobs">
+          <i class="fa fa-briefcase mr-2 fa-1x"></i>Jobs
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateApplications">
+          <i class="fa fa-book-open mr-2 fa-1x"></i>Applications
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/chat">
+          <i class="fa fa-comment mr-2 fa-1x"></i>Chats
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
+        <a class="nav-link" style="font-size:20px;" routerLink="/candidateEducation">
+          <i class="fa fa-user-graduate mr-2 fa-1x"></i>Education
+        </a>
+      </li>
+      <li class="mb-3" routerLinkActive="active">
+        <a>
+        <button class="nav-link" style="font-size:20px;" (click)="logOut()">
+          <i class="fa fa-power-off mr-2 fa-1x"></i>Log Out
+        </button>
+    </a>
+      </li>
+      
+    </ul>
+  </div>
+
+<!-- Sidebar ends here -->
+
+
+<div class="min-vh-100 " [class.blurred]="showSidebar" style="padding-top: 15vh; padding-bottom: 15vh;">
+
+   
+  
+    
+     
+  
+      <div class="row m-2">
+        <div class="col-lg-4">
+          <div class="card mb-4 shadow">
+            <div class="card-body text-center">
+              <img src="../../assets/profile.jpeg" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 200px;height:200px;object-fit: cover;">
+              <h5 class="my-3" style="text-transform: capitalize;">{{currentCandidate.firstName}} {{currentCandidate.lastName}}</h5>
+              <p class="text-muted mb-1">{{currentCandidate.designation}}</p> 
+              </div>
+          </div>
+           <div class="card mb-4 mb-lg-0">
+            <div class="card-body p-0">
+              <ng-container *ngIf="currentCandidate.designation!='student' && currentCandidate.status=='Recruiter'">
+                <button class="btn text-light p-4" style="background-color: #154863;width:100%;height:100%" data-bs-toggle="modal" data-bs-target="#postJobModal">
+                    <i class="fas fa-pencil-alt fa-2x mb-3"></i> 
+                     <h5 class="card-title"style="">Post a job</h5>
+                   
+                        
+                 </button>
+               </ng-container> 
+            </div>
+          </div> 
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4 shadow">
+            <div class="card-body">
+              
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Email</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{currentCandidate.username}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Phone Number</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{currentCandidate.phoneNumber}}</p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="mb-0">Birth Date</p>
+                </div>
+                <div class="col-sm-9">
+                  <p class="text-muted mb-0">{{currentCandidate.birthDate}}</p>
+                </div>
+              </div>
+               <hr>
+              <button class="btn" data-bs-toggle = "modal" data-bs-target="#editProfileModal" style="background-color: #154863;color:white;">Edit</button>
+              
+            </div>
+          </div>
+          
+            
+          </div> 
+        </div>
+      </div>
+    
+  
+    
+      
+   
+
+
+
+
+<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" data-bs-backdrop="static" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="editCandidateProfile.reset()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form #editCandidateProfile="ngForm" (ngSubmit)="saveChanges(); ">
+          <div class="mb-3">
+            <label for="editEmail" class="form-label">Email</label>
+            <input type="text" class="form-control" value={{currentCandidate.username}} id="editEmail"  disabled>
+          </div>
+          <div class="mb-3">
+            <label for="contactNumber">Phone Number*</label>
+            <input
+            
+              type="text"
+              id="phoneNumber"
+              placeholder=""
+              name="phoneNumber"
+              inputmode="numeric"
+              ngModel
+              required
+              [(ngModel)]="currentCandidate.phoneNumber"
+              minlength="10"
+              maxlength="10"
+              #phoneNumber="ngModel"
+            />
+    
+            <div
+              *ngIf="
+                (phoneNumber.touched || phoneNumber.dirty) &&
+                !phoneNumberValidator(phoneNumber.value)
+              "
+            >
+              <small>please enter a valid phone number</small>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="date">Birth Date*</label>
+        <input
+        class="form-control"
+          type="date"
+          id="birthDate"
+          name="birthDate"
+          ngModel
+          [(ngModel)]="currentCandidate.birthDate"
+          required
+          #birthDate="ngModel"
+        />
+        <div *ngIf="birthDate.dirty || birthDate.touched">
+          <div *ngIf="!birthDateValidator(birthDate.value)">
+            <small>Should be 18 years or older</small>
+          </div>
+        </div></div>
+          <button type="submit" data-bs-dismiss="modal" class="btn text-light" style="background-color: #154863;" [disabled]="editCandidateProfile.invalid">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="profile">
+  <div class="text-center my-2">
+     
+    <img src="../../assets/profile.jpeg" alt="Profile Image" class="img img-fluid rounded-circle">
+
+    <hr class="bg-primary"> 
+
+   <ng-container *ngIf="currentCandidate.designation!='student' && currentCandidate.status=='Recruiter'">
+   <button class="btn text-light p-4" style="background-color: #154863;width:20%;height:20%" data-bs-toggle="modal" data-bs-target="#postJobModal">
+       <i class="fas fa-pencil-alt fa-2x mb-3"></i> 
+        <h5 class="card-title"style="">Post a job</h5>
+      
+           
+    </button>
+  </ng-container>
+  </div>
+
+
+</div> -->
+
+<!-- <div class="personalDetails">
+
+<h4 class="text-center" style="font-family:'Lucida Sans';font-size:30px;">Personal Details</h4>
+<hr>
+<form #candidateForm="ngForm" (ngSubmit)="onSubmit()" class="d-flex flex-wrap justify-content-between mt-4">
+<div class="form-group">
+<label for="username">Username:</label>
+<input type="text" id="username" name="username" style="width:500px;" [(ngModel)]="currentCandidate.username" class="form-control" />
+</div>
+
+<div class="form-group">
+<label for="designation">Designation:</label>
+<input type="text" id="designation" name="designation" style="width:500px;" [(ngModel)]="currentCandidate.designation" class="form-control" />
+</div>
+
+<div class="form-group">
+<label for="birthDate">Birth Date:</label>
+<input type="date" id="birthDate" name="birthDate" style="width:500px;" [(ngModel)]="currentCandidate.birthDate" class="form-control" />
+</div>
+
+<div class="form-group">
+<label for="phoneNumber">Phone Number:</label>
+<input type="tel" id="phoneNumber" name="phoneNumber" style="width:500px;" [(ngModel)]="currentCandidate.phoneNumber" class="form-control" />
+</div>
+
+<div class="form-group" *ngIf="currentCandidate.company != null">
+<label for="company">Company:</label>
+<input type="text" id="company" name="company" style="width:500px;" [(ngModel)]="currentCandidate.company.name" class="form-control" />
+</div>
+
+ <button type="submit" class="btn rounded text-light" style="background-color:#154863">Save</button> 
+</form>
+
+
+</div>  -->
+
+<!-- <div class="proffesionalDetails">
+<h4 class="text-center" style="font-family:'Lucida Sans';font-size:30px;">Professional Details</h4>
+<hr>
+
+
+</div> -->
+    
+
+<div class="modal fade" id="postJobModal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #96B6C5;">
+          <h2 class="modal-title ">Post a new job</h2>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="postJobForm.reset()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" >
+          <form #postJobForm="ngForm" (ngSubmit)="postJob(postJobForm.value); postJobForm.reset()">
+            
+              <label for="role">Role*</label>
+              <input type="text" class="form-control" id="role" name="role" ngModel required #role="ngModel">
+              <div *ngIf="role.invalid && (role.dirty || role.touched)">
+                <small>Role is required.</small>
+              </div>
+
+            
+              <label for="description">Skills*</label>
+              <textarea class="form-control" id="description" name="description" ngModel required #description="ngModel"></textarea>
+              <div *ngIf="description.invalid && (description.dirty || description.touched)">
+                <small>Skill is required.</small>
+              </div>
+           
+            
+              <label for="vacancy">Vacancy*</label>
+              <input type="number" class="form-control" id="vacancy" name="vacancy" ngModel required #vacancy="ngModel">
+              <div *ngIf="vacancy.invalid && (vacancy.dirty || vacancy.touched)">
+                <small>Vacancy is required.</small>
+              </div>
+            
+            
+              <label for="salary">Salary Per Annum(in lpa)*</label>
+              <input type="number" class="form-control" id="salary" name="salary" ngModel required min="1" #salary="ngModel">
+              <div *ngIf="salary.invalid && (salary.dirty || salary.touched)">
+                <small>Please enter a positive value of salary.</small>
+              </div>
+
+              <div style="margin:5px">
+              <label for="location" 
+              >Location</label
+            >
+            <select
+              name="location"
+              id="location"
+              [(ngModel)]="selectedLocation"
+             
+            >
+              <option value="Remote">Remote</option>
+              <option value="On-Site">On Site</option>
+              <option value="Hybrid">Hybrid</option>
+            </select>
+          </div>
+           
+            <button type="submit" class="btn btn-primary m-2" data-bs-dismiss="modal" [disabled]="postJobForm.invalid">Submit</button>
+          </form>
+          
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+   
+
+
+
+    <!-- footer starts here -->
+
+    <footer>
+      <div
+        class="text-center text-light py-2"
+        style="background-color: #154863"
+      >
+        <p class="mb-0">&copy; 2023 Your Company. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Footer ends here -->
+
+    <script
+      src="http://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+      integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

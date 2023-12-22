@@ -2,21 +2,39 @@
   {
     background-color: #164863; 
     width: 300px; 
-    min-height: 100%; 
+    min-height:100vh; 
     padding: 20px;
     z-index:1;
+    position:absolute;
+    
   }
 
   body {
     overflow-x: hidden;
+     background-color: #F5F7F8;
   }
 
-  .text-light.flex-column.sidebar ul li a.nav-link:hover,button.nav-link:hover {
+ 
+
+  .text-light.flex-column.sidebar ul li a.nav-link:hover,
+.text-light.flex-column.sidebar ul li button.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.9); /* Set alpha (fourth value) to adjust transparency */
+  opacity: 1; /* Adjust opacity if needed */
+  color: #061c27;
+  border-radius: 10px;
+}
+
+
+  .sidebar .active
+  {
     background-color: #ffffff; 
-    color: #164863; 
+    color: #154863; 
     border-radius:10px;
   }
-
+  .blurred {
+    filter: blur(3px);
+    transition: filter 0.3s ease; 
+  }
  
 .card-body p:nth-child(1) {
     display: flex;
@@ -41,4 +59,33 @@
     color:white;
     padding: 5px;
   }
+  
+
+  
+  
+  .pagination {
+    position: relative;
+    bottom: 0px; /* Adjust the distance from the bottom */
+    text-align: center;
+    padding: 10px;
+    padding-top:10%;
+    left:20%;
+    
+  }
+
+  /* .ngx-pagination .current {
+    background: #154863!important;
+    background-image: initial !important;
+    background-position-x: initial !important;
+    background-position-y: initial !important;
+    background-size: initial !important;
+    background-repeat-x: initial !important;
+    background-repeat-y: initial !important;
+    background-attachment: initial !important;
+    background-origin: initial !important;
+    background-clip: initial !important;
+    background-color: #154863!important;
+    color: #fff!important;
+} */
+   
   

@@ -1,0 +1,12 @@
+.table-responsive
+{
+    overflow-x:hidden;
+}
+
+.pagination {
+    position: absolute;
+    bottom: 50px; /* Adjust the distance from the bottom */
+    text-align: center;
+    margin-left:40%;
+    
+  }

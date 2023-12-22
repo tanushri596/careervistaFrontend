@@ -15,7 +15,7 @@ export class SignUpComponent implements OnInit {
   userEmailValidationPerformed = false;
   companyEmailValidationPerformed = false;
   receivedOption: any;
-  candidate: boolean = false;
+  candidate: boolean = true;
   existingMailMsg: string | undefined;
   yearDifference: number = 0;
   companyNameArray: string[] = [];
@@ -23,15 +23,23 @@ export class SignUpComponent implements OnInit {
   selectedDesignation!: String;
   existingCandidate:boolean = false; // to check if the candidate email is already present or not
   existingCompany:boolean = false; 
+  currentpage:number = 1;
+  username!:string;
 
+  
   
   constructor(private signUpService: SignUpService, private router: Router) {}
 
   ngOnInit() {
+
+   
     this.signUpService.data$.subscribe((data) => {
       this.receivedOption = data;
-      if (this.receivedOption === 'candidate') this.candidate = true;
-      else this.candidate = false;
+      
+      if (this.receivedOption == 'candidate') this.candidate = true;
+      else if(this.receivedOption == 'company') this.candidate = false;
+
+     
     });
 
    
@@ -47,6 +55,11 @@ export class SignUpComponent implements OnInit {
         });
       });
     
+  }
+
+  nextClicked()
+  {
+    this.currentpage +=1;
   }
 
   companyNameValidator(companyName: string): boolean {
@@ -148,7 +161,13 @@ export class SignUpComponent implements OnInit {
 
     if (this.selectedDesignation === 'student') {
       // candidateData.company = null;
-    } else candidateData.company = data.company;
+    } else 
+    {
+      candidateData.company = data.company;
+      candidateData.status = "Employee";
+    }
+
+    console.log()
 
     this.signUpService.addCandidate(candidateData).subscribe({
       next: (val) => {

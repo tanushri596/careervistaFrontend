@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Candidate, Project } from '../model';
+import { Candidate, CandidateDto, Project } from '../model';
 import { SignUpService } from '../services/sign-up.service';
 import { ToasterService } from '../services/toaster.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-candidate-project',
@@ -10,11 +11,13 @@ import { ToasterService } from '../services/toaster.service';
 })
 export class CandidateProjectComponent implements OnInit
 {
-  currentCandidate!:Candidate;
+  currentCandidate!:CandidateDto;
   projects:Project[] = [];
   showSidebar:boolean = false;
   username:any = localStorage.getItem("username");
   showDescriptionMap: { [id: number]: boolean } = {};
+  yearDifference:number=0;
+  currentDate:Date=new Date();
   
 
   constructor(private signUpService:SignUpService,private toasterService:ToasterService){}
@@ -45,7 +48,31 @@ export class CandidateProjectComponent implements OnInit
       })
     
   }
+  dateValidator(startDate: string): boolean {
+    const inputDate = new Date(startDate);
+    const comparisonDate = new Date();
 
+    this.yearDifference =
+      comparisonDate.getFullYear() - inputDate.getFullYear();
+
+    if (
+      comparisonDate.getMonth() < inputDate.getMonth() ||
+      (comparisonDate.getMonth() === inputDate.getMonth() &&
+        comparisonDate.getDate() < inputDate.getDate())
+    ) {
+      this.yearDifference--;
+    }
+
+    console.log(this.yearDifference);
+
+    if (this.yearDifference < 60 && this.yearDifference >= 0) return false;
+    return true;
+  }
+
+  differenceValidator(startDate:string,endDate:string):boolean
+  {
+      return new Date(startDate) > new Date(endDate);
+  }
   sidebar()
   {
     this.showSidebar = !this.showSidebar;
@@ -60,7 +87,7 @@ export class CandidateProjectComponent implements OnInit
   {
    this.toasterService.showNotification('Project added successfully!');
   
-   projectData.user = this.currentCandidate;
+   projectData.userId = this.currentCandidate.id;
    //this.projects.push(projectData);
    console.log(projectData);
    this.signUpService.addProject(projectData).subscribe(
@@ -87,13 +114,19 @@ export class CandidateProjectComponent implements OnInit
     })
   }
 
-  delete(proId:number){
-    const result = window.confirm('Do you want to delete?');
-    if (result) {
-     this.deleteProject(proId);
-    } else {
-      
-    }
+  openSweetAlert(proId:number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteProject(proId);
+      }
+    });
   }
 
   deleteProject(proId:number)
